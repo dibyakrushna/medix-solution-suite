@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MedixSolutionSuite\Admin;
 
-use MedixSolutionSuite\Admin\Doctor\DoctorTable;
+use MedixSolutionSuite\Admin\AdminDisplay\AdminDisplayController;
+use MedixSolutionSuite\Admin\AdminDisplay\Helper\AdminMembersContext;
+use MedixSolutionSuite\Admin\AdminDisplay\Factories\MSSAdminMembersFactoriesImpl;
 
 
 /**
@@ -12,42 +15,46 @@ use MedixSolutionSuite\Admin\Doctor\DoctorTable;
  * @author dibya
  */
 class AdminMenu {
-    
-    private static ?self $instance = null;
-    private ?DoctorTable $doctorTable = null;
 
-    public function __construct(DoctorTable $doctorTable, ) {
-        echo "Hello";
-        $this->doctorTable = $doctorTable;
+    private static ?self $instance = null;
+   
+
+    public function __construct(private AdminDisplayController $adminDisplayController) {
+        
     }
+
     /**
      * Admin Menu
-     * **/
+     * * */
     #[AdminMenus]
     public function medixSolutionSuiteAdminMenus() {
         $page_title = __("Medix Solution Suite", MSS_TEXT_DOMAIN);
-        $menu_title = __("Medix Heros", MSS_TEXT_DOMAIN);
-        $capability ="manage_options";
+        $menu_title = __("Medix Solution Suite", MSS_TEXT_DOMAIN);
+        $capability = "manage_options";
         $menu_slug = "medix_solution_suite";
-        $callback = [$this->doctorTable, "mss_doctor" ];
+        $callback = "__return_null";
         $icon_url = "dashicons-nametag";
-        $position = 6 ;
+        $position = 6;
+
         add_menu_page($page_title, $menu_title, $capability, $menu_slug, $callback, $icon_url, $position);
+        add_submenu_page($menu_slug, __("Members", MSS_TEXT_DOMAIN), __("Members", MSS_TEXT_DOMAIN), $capability, "mss_members", [$this->adminDisplayController, "memberDisplay"], 6.1);
+        remove_submenu_page($menu_slug, $menu_slug);
     }
 
     /**
      * Used Singleton DP for 
      * 
      * * */
-   #[Singleton]
     public static function getInstance(): self {
         if (null === self::$instance) {
-            self::$instance = new self(new DoctorTable(),);
+            $adminDipendecy = new AdminDisplayController(new AdminMembersContext(new MSSAdminMembersFactoriesImpl));
+            self::$instance = new self( $adminDipendecy );
         }
         return self::$instance;
     }
 
     public function init() {
+        register_nav_menu('mss_admin_members_menu', __('MSS Admin Members Menu', MSS_TEXT_DOMAIN));
         add_action('admin_menu', [$this, 'medixSolutionSuiteAdminMenus']);
     }
 }

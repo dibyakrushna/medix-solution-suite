@@ -16,39 +16,7 @@
     "require-dev": {
         "coenjacobs/mozart": "^0.7.1"
     },
-    "extra": {
-        "mozart": {
-            "dep_namespace": "CoenJacobs\\TestProject\\Dependencies\\",
-            "dep_directory": "/mozart/Dependencies/",
-            "classmap_directory":"/src/",
-            "classmap_prefix": "CoenJacobs\\TestProject\\Dependencies\\",
-            "packages": [
-                "pimple/pimple"
-            ],
-            "excluded_packages": [
-                "psr/container"
-            ],
-            "override_autoload": {
-                "google/apiclient": {
-                    "classmap": [
-                        "src/"
-                    ]
-                }
-            },
-            "delete_vendor_directories": true
-        }
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "\"vendor/bin/mozart\" compose",
-            "php composer.phar dump-autoload"
-        ],
-        "post-update-cmd": [
-            "\"vendor/bin/mozart\" compose",
-            "php composer.phar dump-autoload"
-        ]
-    },
     "require": {
-        "pimple/pimple": "^3.5"
+        "php-di/php-di": "^7.0"
     }
 }
