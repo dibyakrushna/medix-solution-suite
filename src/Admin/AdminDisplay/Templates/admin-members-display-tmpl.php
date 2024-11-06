@@ -1,4 +1,4 @@
-<div class="wrap hello">
+<div class="wrap">
     <?php
     wp_nav_menu(array(
         'theme_location' => 'mss_admin_members_menu',
@@ -6,10 +6,7 @@
         'walker' => new \Walker_Nav_Menu(),
         'container' => 'nav',
     ));
-
-    // echo  $args["display"]->table_view();
-
-    echo wp_kses($args["display"]->table_view(), wp_kses_allowed_html("post"));
+    echo wp_kses($args["display"], wp_kses_allowed_html("post"));
     ?>
 </div>
 

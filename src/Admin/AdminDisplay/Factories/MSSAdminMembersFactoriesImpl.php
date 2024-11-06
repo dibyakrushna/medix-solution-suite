@@ -8,11 +8,14 @@ use MedixSolutionSuite\Admin\AdminDisplay\Factories\MSSAdminMembersFactory;
 use MedixSolutionSuite\Admin\Members\MembersController;
 use MedixSolutionSuite\Admin\Members\Doctor\AdminDoctorController;
 use MedixSolutionSuite\Admin\Members\Doctor\AdminDoctorTable;
+use MedixSolutionSuite\Admin\Members\Patient\AdmminPatientController;
+use MedixSolutionSuite\Admin\Members\Home\AdminMemberHomeController;
 
-enum MemberEnum {
+enum MemberEnum: string {
 
-    case doctor;
-    case patient;
+    case DOCTOR = "doctor";
+    case PATIENT = "patient";
+    case HOME = "home";
 }
 
 /**
@@ -22,21 +25,36 @@ enum MemberEnum {
  */
 class MSSAdminMembersFactoriesImpl implements MSSAdminMembersFactory {
 
-    public ?string $member = null;
-
-    public function __construct() {
-        $this->member = sanitize_text_field(filter_input(INPUT_GET, "member", FILTER_DEFAULT));
-    }
-
     //put your code here
     public function get_member_controller(): MembersController {
-
-        $return_value = match ($this->member) {
-            MemberEnum::doctor =>  new AdminDoctorController(new AdminDoctorTable),
-            default => new AdminDoctorController(new AdminDoctorTable)
+        $to_match_strig = $this->get_controller_from_input();
+        $query_string = sanitize_text_field(filter_input(INPUT_SERVER, "QUERY_STRING"));
+        parse_str($query_string, $result);
+        $keys = array_keys($result);
+        if (!in_array('controller', $keys)) {
+            $home_url = add_query_arg(
+                    array(
+                        'page' => 'mss_members',
+                        'controller' => 'home',
+                        'action' => 'view'
+                    ),
+                    admin_url('admin.php')
+            );
+            echo "<script>location.href = '$home_url';</script>";
+            exit;
+        }
+        $return_value = match ($to_match_strig) {
+            MemberEnum::DOCTOR->value => new AdminDoctorController(new AdminDoctorTable),
+            MemberEnum::PATIENT->value => new AdmminPatientController(),
+            MemberEnum::HOME->value => new AdminMemberHomeController(),
+            default => throw new \ErrorException("Custom message"),
         };
-        
-        return $return_value ;
-        
+
+        return $return_value;
+    }
+
+    private function get_controller_from_input(): ?string {
+        $controller = sanitize_text_field(filter_input(INPUT_GET, "controller", FILTER_DEFAULT));
+        return $controller ?: null;
     }
 }

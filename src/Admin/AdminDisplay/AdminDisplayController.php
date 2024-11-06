@@ -1,8 +1,10 @@
 <?php
+declare (strict_types=1);
 
 namespace MedixSolutionSuite\Admin\AdminDisplay;
 
 use MedixSolutionSuite\Admin\AdminDisplay\Helper\AdminMembersContext;
+use Throwable;
 
 /**
  * Description of AdminDisplayController
@@ -13,11 +15,47 @@ class AdminDisplayController {
 
     //put your code here
     public function __construct(private AdminMembersContext $adminMembersContext) {
-        
+        add_action("admin_enqueue_scripts", [$this, "mss_display_admin_assets"]);
+        $this->register_mss_member_munu();
+    }
+
+    public function mss_display_admin_assets() {
+        wp_register_style('custom_mss_admin_display_css', plugin_dir_url(__FILE__) . '/Assests/css/mss-admin-display-style.css', false, '1.0.0');
+        wp_enqueue_style('custom_mss_admin_display_css');
+        global $_wp_admin_css_colors;
+        $color = get_user_meta(get_current_user_id(), 'admin_color', true);
+        $colors = $_wp_admin_css_colors[$color];
+
+//        $primary_color = $colors->colors[0];
+//        $secondary_color = $colors->colors[1];
+//        $first_active_hover = $colors->colors[3];
+//        $data = ":root {
+//            --mss-member-nav-bar-primary-color: {$primary_color};
+//            --mss-member-nav-bar-secondary-color: {$secondary_color};
+//            --mss-member-nav-bar-first-active-hover:{$first_active_hover}
+//        }";
+//
+//        wp_add_inline_style("custom_mss_admin_display_css", $data);
     }
 
     public function memberDisplay() {
 
+
+        try {
+            $display = $this->adminMembersContext->get_context();
+            $template_view = sanitize_text_field(filter_input(INPUT_GET, "action"));
+            if (method_exists($display, $template_view)) {
+                $view = $display->$template_view();
+                $this->load_template_part("admin-members-display-tmpl", ["display" => $view]);
+            } else {
+                throw new \ErrorException("No method found");
+            }
+        } catch (Throwable $exc) {
+            $this->load_template_part("admin-members-display-404-tmpl");
+        }
+    }
+
+    function register_mss_member_munu() {
         $menuName = 'mss_admin_members_menu';
         $menuExists = wp_get_nav_menu_object($menuName);
 
@@ -26,8 +64,16 @@ class AdminDisplayController {
             $menuId = wp_create_nav_menu($menuName);
             $baseUrl = admin_url('admin.php');
 
+            $home_url = add_query_arg(array('page' => 'mss_members', 'controller' => 'home', 'action' => 'view'), $baseUrl);
+            $home_url_id = wp_update_nav_menu_item($menuId, 0, array(
+                'menu-item-title' => __('Home', MSS_TEXT_DOMAIN),
+                'menu-item-classes' => 'home',
+                'menu-item-url' => $home_url,
+                'menu-item-status' => 'publish'
+            ));
+
             // Create the main "Doctor" menu item
-            $doctorUrl = add_query_arg(array('page' => 'mss_members', 'member' => 'doctor', 'action' => 'view'), $baseUrl);
+            $doctorUrl = add_query_arg(array('page' => 'mss_members', 'controller' => 'doctor', 'action' => 'view'), $baseUrl);
             $doctorItemId = wp_update_nav_menu_item($menuId, 0, array(
                 'menu-item-title' => __('Doctor', MSS_TEXT_DOMAIN),
                 'menu-item-classes' => 'doctor',
@@ -36,7 +82,7 @@ class AdminDisplayController {
             ));
 
             // Add child items under "Doctor"
-            $addDoctorUrl = add_query_arg(array('page' => 'mss_members', 'member' => 'doctor', 'action' => 'add'), $baseUrl);
+            $addDoctorUrl = add_query_arg(array('page' => 'mss_members', 'controller' => 'doctor', 'action' => 'add'), $baseUrl);
             wp_update_nav_menu_item($menuId, 0, array(
                 'menu-item-title' => __('Add Doctor', MSS_TEXT_DOMAIN),
                 'menu-item-url' => $addDoctorUrl,
@@ -44,7 +90,7 @@ class AdminDisplayController {
                 'menu-item-parent-id' => $doctorItemId
             ));
 
-            $viewDoctorUrl = add_query_arg(array('page' => 'mss_members', 'member' => 'doctor', 'action' => 'view'), $baseUrl);
+            $viewDoctorUrl = add_query_arg(array('page' => 'mss_members', 'controller' => 'doctor', 'action' => 'view'), $baseUrl);
             wp_update_nav_menu_item($menuId, 0, array(
                 'menu-item-title' => __('View Doctor', MSS_TEXT_DOMAIN),
                 'menu-item-url' => $viewDoctorUrl,
@@ -53,7 +99,7 @@ class AdminDisplayController {
             ));
 
             // Create the main "Patient" menu item
-            $patientUrl = add_query_arg(array('page' => 'mss_members', 'member' => 'patient', 'action' => 'view'), $baseUrl);
+            $patientUrl = add_query_arg(array('page' => 'mss_members', 'controller' => 'patient', 'action' => 'view'), $baseUrl);
             $patientItemId = wp_update_nav_menu_item($menuId, 0, array(
                 'menu-item-title' => __('Patient', MSS_TEXT_DOMAIN),
                 'menu-item-classes' => 'patient',
@@ -62,7 +108,7 @@ class AdminDisplayController {
             ));
 
             // Add child items under "Patient"
-            $addPatientUrl = add_query_arg(array('page' => 'mss_members', 'member' => 'patient', 'action' => 'add'), $baseUrl);
+            $addPatientUrl = add_query_arg(array('page' => 'mss_members', 'controller' => 'patient', 'action' => 'add'), $baseUrl);
             wp_update_nav_menu_item($menuId, 0, array(
                 'menu-item-title' => __('Add Patient', MSS_TEXT_DOMAIN),
                 'menu-item-url' => $addPatientUrl,
@@ -70,13 +116,22 @@ class AdminDisplayController {
                 'menu-item-parent-id' => $patientItemId
             ));
 
-            $viewPatientUrl = add_query_arg(array('page' => 'mss_members', 'member' => 'patient', 'action' => 'view'), $baseUrl);
+            $viewPatientUrl = add_query_arg(array('page' => 'mss_members', 'controller' => 'patient', 'action' => 'view'), $baseUrl);
             wp_update_nav_menu_item($menuId, 0, array(
                 'menu-item-title' => __('View Patient', MSS_TEXT_DOMAIN),
                 'menu-item-url' => $viewPatientUrl,
                 'menu-item-status' => 'publish',
                 'menu-item-parent-id' => $patientItemId
             ));
+
+            // If the menu exists, ensure it's assigned to the desired location
+            $menuLocations = get_theme_mod('nav_menu_locations', array());
+
+            // Check if the menu location is already set
+            if (!isset($menuLocations['mss_admin_members_menu'])) {
+                $menuLocations['mss_admin_members_menu'] = $menuExists->term_id;
+                set_theme_mod('nav_menu_locations', $menuLocations);
+            }
         } else {
             // If the menu exists, ensure it's assigned to the desired location
             $menuLocations = get_theme_mod('nav_menu_locations', array());
@@ -87,19 +142,25 @@ class AdminDisplayController {
                 set_theme_mod('nav_menu_locations', $menuLocations);
             }
         }
-      
-        $display = $this->adminMembersContext->get_context();
-        load_template($this->getTemplateFile("admin-members-display-tmpl"), true, ["display" => $display]);
     }
 
     /**
      * Getting Template path
      * 
      * * */
-    private function getTemplateFile(string $fileName): string {
+    private function load_template_part(string $fileName, array $args = []) {
+        try {
+            $file_path = plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php";
+            if (file_exists($file_path)) {
+                load_template($file_path, true, $args);
+            } else {
+                throw new \ErrorException(__("No template found", MSS_TEXT_DOMAIN));
+            }
+        } catch (Throwable $exc) {
+            ?>
+            <div class="wrap"> <?= $exc->getMessage() ?>      </div>
 
-
-
-        return plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php";
+            <?php
+        }
     }
 }

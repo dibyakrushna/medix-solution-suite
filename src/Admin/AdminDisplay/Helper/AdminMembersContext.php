@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace MedixSolutionSuite\Admin\AdminDisplay\Helper;
 
@@ -13,16 +13,16 @@ use MedixSolutionSuite\Admin\AdminDisplay\Factories\MSSAdminMembersFactoriesImpl
  * @author dibya
  */
 class AdminMembersContext {
-    
-    public ?MembersController $membersController = null ;
+
+    public ?MembersController $membersController = null;
+
     //put your code here
     public function __construct(private MSSAdminMembersFactoriesImpl $factoriesImpl) {
         
     }
-    
-    public function get_context():MembersController{
+
+    public function get_context(): MembersController {
         $this->membersController = $this->factoriesImpl->get_member_controller();
-        
         return $this->membersController;
     }
 }

@@ -12,7 +12,7 @@ use MedixSolutionSuite\Admin\Members\MembersController;
  *
  * @author dibya
  */
-class AdminDoctorController extends MembersController{
+class AdminDoctorController extends MembersController {
 
     //put your code here
 
@@ -20,18 +20,22 @@ class AdminDoctorController extends MembersController{
         //  echo "Hello I am from Doctor";
     }
 
-    public function table_view(): string {
+   
+
+    public function view(): string {
         ob_start();
         load_template($this->getTemplateFile("admin-doctor-table"), true, ["mss_admin_doctor_table_object" => $this->adminDoctorTable]);
         return ob_get_clean();
     }
-    
-    public function add(): void{
-        echo "Hello";
+
+    public function add(): string {
+        ob_start();
+        load_template($this->getTemplateFile("admin-doctor-add-new-form"), true );
+        return ob_get_clean();
     }
 
     private function getTemplateFile(string $fileName): string {
 
-        return plugin_dir_path(__FILE__) . "/Templates/Table/{$fileName}.php";
+        return plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php";
     }
 }

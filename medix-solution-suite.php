@@ -16,16 +16,7 @@ define("MSS_TEXT_DOMAIN", "medix_solution_suite");
 
 require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
-
-add_action("init", function () {
-    if (!class_exists('WP_List_Table')) {
-        
-        require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' ); //added
-        require_once( ABSPATH . 'wp-admin/includes/screen.php' ); //added
-        require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
-        require_once( ABSPATH . 'wp-admin/includes/template.php' );
-    }
-
+add_action("plugins_loaded", function () {
     AdminMenu::getInstance()?->init();
 });
 

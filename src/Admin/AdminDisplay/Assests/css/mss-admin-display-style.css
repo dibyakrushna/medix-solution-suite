@@ -1,0 +1,99 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 29-Oct-2024, 10:31:21 pm
+    Author     : dibya
+*/
+
+/* Main navigation container */
+.menu-mss_admin_members_menu-container .mss-admin-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #2c3e50;
+    display: flex;
+    position: relative;
+}
+
+/* Main menu items */
+.menu-mss_admin_members_menu-container .mss-admin-menu > li {
+    position: relative;
+}
+
+/* All menu items */
+.menu-mss_admin_members_menu-container .mss-admin-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+/* All links */
+.menu-mss_admin_members_menu-container .mss-admin-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+/* Main level links hover */
+.menu-mss_admin_members_menu-container .mss-admin-menu > li > a:hover {
+    background-color: #34495e;
+}
+
+/* Submenu styling */
+.menu-mss_admin_members_menu-container .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #34495e;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Show submenu on hover */
+.menu-mss_admin_members_menu-container .mss-admin-menu li:hover > .sub-menu {
+    display: block;
+}
+
+/* Submenu items */
+.menu-mss_admin_members_menu-container .sub-menu li {
+    width: 100%;
+}
+
+/* Submenu links */
+.menu-mss_admin_members_menu-container .sub-menu a {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Submenu links hover */
+.menu-mss_admin_members_menu-container .sub-menu a:hover {
+    background-color: #2c3e50;
+}
+
+/* Current menu item styling */
+.menu-mss_admin_members_menu-container .current-menu-item > a,
+.menu-mss_admin_members_menu-container .current-menu-parent > a {
+    background-color: #3498db;
+}
+
+/* Remove last border from submenu */
+.menu-mss_admin_members_menu-container .sub-menu li:last-child a {
+    border-bottom: none;
+}
+
+/* Add dropdown arrow */
+.menu-mss_admin_members_menu-container .menu-item-has-children > a::after {
+    content: '▼';
+    margin-left: 5px;
+    font-size: 10px;
+    vertical-align: middle;
+}
