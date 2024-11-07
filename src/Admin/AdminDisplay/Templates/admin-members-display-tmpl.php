@@ -6,7 +6,8 @@
         'walker' => new \Walker_Nav_Menu(),
         'container' => 'nav',
     ));
-    echo wp_kses($args["display"], wp_kses_allowed_html("post"));
+    echo $args["display"];
+    // echo wp_kses($args["display"], wp_kses_allowed_html("post"));
     ?>
 </div>
 
