@@ -6,6 +6,8 @@ namespace MedixSolutionSuite\Admin\Members\Doctor;
 
 use MedixSolutionSuite\Admin\Members\Doctor\AdminDoctorTable;
 use MedixSolutionSuite\Admin\Members\MembersController;
+use MedixSolutionSuite\Util\Request;
+use MedixSolutionSuite\Service\DoctorServiceImpl;
 
 /**
  * Description of DoctorTable
@@ -16,26 +18,32 @@ class AdminDoctorController extends MembersController {
 
     //put your code here
 
-    public function __construct(private AdminDoctorTable $adminDoctorTable) {
+    public function __construct(
+            private AdminDoctorTable $admin_doctor_table,
+            private Request $request,
+            private DoctorServiceImpl $doctor_service
+    ) {
+
         //  echo "Hello I am from Doctor";
     }
 
-   
-
     public function view(): string {
-        ob_start();
-        load_template($this->getTemplateFile("admin-doctor-table"), true, ["mss_admin_doctor_table_object" => $this->adminDoctorTable]);
-        return ob_get_clean();
+
+        return $this->get_template_part("admin-doctor-table", ["mss_admin_doctor_table_object" => $this->admin_doctor_table]);
     }
 
-    public function add(): string {
-        ob_start();
-        load_template($this->getTemplateFile("admin-doctor-add-new-form"), true );
-        return ob_get_clean();
+    public function add(array $args = []): string {
+        return $this->get_template_part("admin-doctor-add-new-form", ["form_data" => $args]);
     }
 
-    private function getTemplateFile(string $fileName): string {
+    public function save(): ?string {
+        $this->doctor_service->save($this->request);
+        return $this->add();
+    }
 
-        return plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php";
+    private function get_template_part(string $fileName, array $args = []): string {
+        ob_start();
+        load_template(plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php", true, $args);
+        return ob_get_clean();
     }
 }

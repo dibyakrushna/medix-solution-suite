@@ -10,13 +10,16 @@ use MedixSolutionSuite\Admin\Members\Doctor\AdminDoctorController;
 use MedixSolutionSuite\Admin\Members\Doctor\AdminDoctorTable;
 use MedixSolutionSuite\Admin\Members\Patient\AdmminPatientController;
 use MedixSolutionSuite\Admin\Members\Home\AdminMemberHomeController;
+use MedixSolutionSuite\Util\Request;
+use MedixSolutionSuite\Enums\MemberEnum;
+use MedixSolutionSuite\Service\DoctorServiceImpl;
 
-enum MemberEnum: string {
-
-    case DOCTOR = "doctor";
-    case PATIENT = "patient";
-    case HOME = "home";
-}
+//enum MemberEnum: string {
+//
+//    case DOCTOR = "doctor";
+//    case PATIENT = "patient";
+//    case HOME = "home";
+//}
 
 /**
  * Description of MSSAdminMembersFactoriesImpl
@@ -44,7 +47,11 @@ class MSSAdminMembersFactoriesImpl implements MSSAdminMembersFactory {
             exit;
         }
         $return_value = match ($to_match_strig) {
-            MemberEnum::DOCTOR->value => new AdminDoctorController(new AdminDoctorTable),
+            MemberEnum::DOCTOR->value => new AdminDoctorController(
+                    admin_doctor_table: new AdminDoctorTable,
+                    request: new Request,
+                    doctor_service: new DoctorServiceImpl
+            ),
             MemberEnum::PATIENT->value => new AdmminPatientController(),
             MemberEnum::HOME->value => new AdminMemberHomeController(),
             default => throw new \ErrorException("Custom message"),

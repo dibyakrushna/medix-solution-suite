@@ -45,7 +45,7 @@ class AdminDisplayController {
             $display = $this->adminMembersContext->get_context();
             $template_view = sanitize_text_field(filter_input(INPUT_GET, "action"));
             if (method_exists($display, $template_view)) {
-                $view = $display->$template_view();
+                $view = call_user_func([$display, $template_view]);
                 $this->load_template_part("admin-members-display-tmpl", ["display" => $view]);
             } else {
                 throw new \ErrorException("No method found");
