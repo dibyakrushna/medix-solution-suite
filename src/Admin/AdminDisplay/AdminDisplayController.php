@@ -51,6 +51,7 @@ class AdminDisplayController {
                 throw new \ErrorException("No method found");
             }
         } catch (Throwable $exc) {
+            print_r($exc->getMessage());
             $this->load_template_part("admin-members-display-404-tmpl");
         }
     }
