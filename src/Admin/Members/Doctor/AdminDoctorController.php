@@ -10,6 +10,9 @@ use MedixSolutionSuite\Util\Request;
 use MedixSolutionSuite\Service\DoctorServiceImpl;
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent\InputField;
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent\TableComposite;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\BuildFormComponentTrait;
+
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\InputFieldTrait;
 
 /**
  * Description of DoctorTable
@@ -17,7 +20,8 @@ use MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent\TableCom
  * @author dibya
  */
 class AdminDoctorController extends MembersController {
-
+    use InputFieldTrait;
+    use BuildFormComponentTrait;
     //put your code here
 
     public function __construct(
@@ -35,7 +39,11 @@ class AdminDoctorController extends MembersController {
     }
 
     public function add(array $args = []): string {
+       
         
+        
+        return $this->build_component();
+        return $input_component->render();
         return $this->get_template_part("admin-doctor-add-new-form", ["form_data" => $args]);
     }
 
@@ -46,19 +54,20 @@ class AdminDoctorController extends MembersController {
 
     private function get_template_part(string $fileName, array $args = []): string {
         ob_start();
-        $args= [
-             "type" => "text",
-            "name" => "mss_admin_doctor_first_name",
-            "id" => "mss_admin_doctor_first_name",
-            "extra_attr" => [],
-            "classes" => ["regular-text"],
-            "label" => "First name of doctor",
-            "header" => "First Name"
-        ];
-        $input = new InputField($args);
-        $table = new TableComposite();
-        $table->add($input);
-        return $table->render();
+//        $args= [
+//             "type" => "text",
+//            "name" => "mss_admin_doctor_first_name",
+//            "id" => "mss_admin_doctor_first_name",
+//            "extra_attr" => [],
+//            "classes" => ["regular-text"],
+//            "label" => "First name of doctor",
+//            "header" => "First Name"
+//        ];
+//        $input = new InputField($args);
+//        $table = new TableComposite();
+//        $table->add($input);
+        // return $table->render();
+
         load_template(plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php", true, $args);
         return ob_get_clean();
     }
