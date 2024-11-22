@@ -1,3 +1,4 @@
+# Buiding is in Process
 # Medix Solution Suite: Your One Stop Healthcare Management Tools
 
 **Medix Solution Suite** is a powerful, all-encompassing WordPress plugin designed to streamline and simplify healthcare management. Built with the modern medical facility in mind, this comprehensive suite offers everything healthcare providers need to manage patients, staff, appointments, billing, and more—directly from your WordPress dashboard.
