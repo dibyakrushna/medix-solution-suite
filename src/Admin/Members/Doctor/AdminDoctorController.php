@@ -25,6 +25,7 @@ class AdminDoctorController extends MembersController {
     //put your code here
 
     public function __construct(
+            
             private AdminDoctorTable $admin_doctor_table,
             private Request $request,
             private DoctorServiceImpl $doctor_service
@@ -39,11 +40,7 @@ class AdminDoctorController extends MembersController {
     }
 
     public function add(array $args = []): string {
-       
-        
-        
-        return $this->build_component();
-        return $input_component->render();
+       return $this->build_component();
         return $this->get_template_part("admin-doctor-add-new-form", ["form_data" => $args]);
     }
 

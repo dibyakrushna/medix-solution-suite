@@ -5,7 +5,7 @@ namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 
 trait FormFieldTrait {
 
-    private function build_form_component($attrs = []): ?array {
+    private function build_form_component_dibya($attrs = []): ?array {
 
         $default_attr = [
             "id" => "",
