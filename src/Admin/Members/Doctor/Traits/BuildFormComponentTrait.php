@@ -27,6 +27,7 @@ trait BuildFormComponentTrait {
         $last_name_input_component = FormBuilder::get_form_component('input', $this->build_input_attr($this->last_name_input_field($form_values)));
         $gender_input_component = FormBuilder::get_form_component('input', $this->build_input_attr($this->gender_input_field($form_values)));
         $dob_input_component = FormBuilder::get_form_component('input', $this->build_input_attr($this->dob_input_field($form_values)));
+        $email_input_component = FormBuilder::get_form_component('input', $this->build_input_attr($this->dob_input_field($form_values)));
 
         $personal_table_component = FormBuilder::get_form_component('table', $this->build_table_attr());
         $form_componet = FormBuilder::get_form_component('form', $this->build_form_attr());
@@ -35,6 +36,7 @@ trait BuildFormComponentTrait {
         $personal_table_component->add($last_name_input_component);
         $personal_table_component->add($gender_input_component);
         $personal_table_component->add($dob_input_component);
+        $personal_table_component->add($email_input_component);
         
         $form_componet->add($personal_table_component);
         
