@@ -90,4 +90,43 @@ trait InputFieldTrait {
             },
         ];
     }
+    
+     /**
+     * @since 1.0.0
+     * * */
+    private function phone_number_input_field(array $form_values): ?array {
+        return [
+            "header" => esc_html("Phone Number", MSS_TEXT_DOMAIN),
+            "label" => esc_html("Phone Number of doctor", MSS_TEXT_DOMAIN),
+            "id" => "mss_admin_doctor_phone_num",
+            "name" => "mss_admin_doctor_phone_num",
+            "extra_attr" => function ($form_values): ?array {
+                $result = [];
+                if (!is_null($form_values['mss_admin_doctor_phone_num'])) {
+                    $result['value'] = esc_attr($form_values['mss_admin_doctor_phone_num']);
+                }
+                return $result;
+            },
+        ];
+    }
+    
+      /**
+     * @since 1.0.0
+     * * */
+    private function email_input_field(array $form_values): ?array {
+        return [
+             "type" => "email",
+            "header" => esc_html("Email", MSS_TEXT_DOMAIN),
+            "label" => esc_html("Email of doctor", MSS_TEXT_DOMAIN),
+            "id" => "mss_admin_doctor_email",
+            "name" => "mss_admin_doctor_email",
+            "extra_attr" => function ($form_values): ?array {
+                $result = [];
+                if (!is_null($form_values['mss_admin_doctor_email'])) {
+                    $result['value'] = esc_attr($form_values['mss_admin_doctor_email']);
+                }
+                return $result;
+            },
+        ];
+    }
 }
