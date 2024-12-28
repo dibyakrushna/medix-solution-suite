@@ -11,8 +11,9 @@ use MedixSolutionSuite\Service\DoctorServiceImpl;
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent\InputField;
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent\TableComposite;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\BuildFormComponentTrait;
-
-use MedixSolutionSuite\Admin\Members\Doctor\Traits\InputFieldTrait;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\DoctorRequestValidationTrait;
+use MedixSolutionSuite\DTO\DoctorRequestDTO;
+use WP_REST_Request;
 
 /**
  * Description of DoctorTable
@@ -20,15 +21,16 @@ use MedixSolutionSuite\Admin\Members\Doctor\Traits\InputFieldTrait;
  * @author dibya
  */
 class AdminDoctorController extends MembersController {
-    use InputFieldTrait;
+
     use BuildFormComponentTrait;
+    use DoctorRequestValidationTrait;
+
     //put your code here
 
     public function __construct(
-            
             private AdminDoctorTable $admin_doctor_table,
             private Request $request,
-            private DoctorServiceImpl $doctor_service
+            private DoctorServiceImpl $doctor_service,
     ) {
 
         //  echo "Hello I am from Doctor";
@@ -36,36 +38,30 @@ class AdminDoctorController extends MembersController {
 
     public function view(): string {
 
-        return $this->get_template_part("admin-doctor-table", ["mss_admin_doctor_table_object" => $this->admin_doctor_table]);
+        return $this->get_template_part( "admin-doctor-table", [ "mss_admin_doctor_table_object" => $this->admin_doctor_table ] );
     }
 
-    public function add(array $args = []): string {
-       return $this->build_component();
-        return $this->get_template_part("admin-doctor-add-new-form", ["form_data" => $args]);
+    public function add( array $args = [] ): string {
+        return $this->build_component();
+        //return $this->get_template_part( "admin-doctor-add-new-form", [ "form_data" => $args ] );
     }
 
     public function save(): ?string {
-        $this->doctor_service->save($this->request);
-        return $this->add();
+        try {
+
+            $validate = $this->validate( $this->request, new DoctorRequestDTO );
+            $this->doctor_service->save( $validate );
+            return $this->add();
+        } catch ( ErrorException $exc ) {
+            return $this->add();
+        }
     }
 
-    private function get_template_part(string $fileName, array $args = []): string {
+    private function get_template_part( string $fileName, array $args = [] ): string {
         ob_start();
-//        $args= [
-//             "type" => "text",
-//            "name" => "mss_admin_doctor_first_name",
-//            "id" => "mss_admin_doctor_first_name",
-//            "extra_attr" => [],
-//            "classes" => ["regular-text"],
-//            "label" => "First name of doctor",
-//            "header" => "First Name"
-//        ];
-//        $input = new InputField($args);
-//        $table = new TableComposite();
-//        $table->add($input);
-        // return $table->render();
-
-        load_template(plugin_dir_path(__FILE__) . "/Templates/{$fileName}.php", true, $args);
+        if ( !file_exists( plugin_dir_path( __FILE__ ) . "/Templates/{$fileName}.php" ) )
+            throw new Exception( __( plugin_dir_path( __FILE__ ) . "/Templates/{$fileName}.php : Not found" ) );
+        load_template( plugin_dir_path( __FILE__ ) . "/Templates/{$fileName}.php", true, $args );
         return ob_get_clean();
     }
 }

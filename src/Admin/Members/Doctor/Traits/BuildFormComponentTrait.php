@@ -5,22 +5,23 @@ declare (strict_type=1);
 namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 
 use MedixSolutionSuite\Util\FormBuilder\FormBuilder;
-use MedixSolutionSuite\Admin\Members\Doctor\Traits\InputFieldTrait;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\PersonalFieldTrait;
 
 trait BuildFormComponentTrait {
 
-    use InputFieldTrait;
+    use PersonalFieldTrait;
 
     private function build_component( array $value = [] ): ?string {
         $default_values = [
             "mss_admin_doctor_first_name" => null,
             "mss_admin_doctor_last_name" => null,
-            "mss_admin_doctor_gender_female" => null,
-            "mss_admin_doctor_gender_male" => null,
-            "mss_admin_doctor_gender_other" => null,
+            "mss_admin_doctor_gender" => null,
             "mss_admin_doctor_dob" => null,
             "mss_admin_doctor_phone_num" => null,
             "mss_admin_doctor_email" => null,
+            "mss_admin_doctor_nationality" => null,
+            "mss_admin_doctor_address" => null,
+            "mss_admin_doctor_website" => null
         ];
         $form_values = array_merge( $default_values, $value );
 
@@ -30,9 +31,14 @@ trait BuildFormComponentTrait {
         $dob_input_component = FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->dob_input_field( $form_values ) ) );
         $email_input_component = FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->email_input_field( $form_values ) ) );
         $phone_number_input_component = FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->phone_number_input_field( $form_values ) ) );
+        $nationality_input_component = FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nationality_input_field( $form_values ) ) );
+        $address_input_component = FormBuilder::get_form_component( 'textarea', $this->address_text_area_field( $form_values ) );
+        $website_input_component = FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->website_input_field( $form_values ) ) );
 
         $personal_table_component = FormBuilder::get_form_component( 'table', $this->build_table_attr() );
         $form_componet = FormBuilder::get_form_component( 'form', $this->build_form_attr() );
+
+        do_action( "mss_admin_doctor_personal_input_before", $personal_table_component );
 
         $personal_table_component->add( $first_name_input_component );
         $personal_table_component->add( $last_name_input_component );
@@ -40,10 +46,15 @@ trait BuildFormComponentTrait {
         $personal_table_component->add( $dob_input_component );
         $personal_table_component->add( $email_input_component );
         $personal_table_component->add( $phone_number_input_component );
+        $personal_table_component->add( $nationality_input_component );
+        $personal_table_component->add( $website_input_component );
+        $personal_table_component->add( $address_input_component );
+
+        do_action( "mss_admin_doctor_personal_input_after", $personal_table_component );
 
         $form_componet->add( $personal_table_component );
 
-        return $form_componet->render(); 
+        return $form_componet->render();
     }
 
     private function build_input_attr( $attr = [] ): ?array {

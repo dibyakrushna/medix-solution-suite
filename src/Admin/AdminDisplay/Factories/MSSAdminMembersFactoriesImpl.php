@@ -12,6 +12,7 @@ use MedixSolutionSuite\Admin\Members\Home\AdminMemberHomeController;
 use MedixSolutionSuite\Util\Request;
 use MedixSolutionSuite\Enums\MemberEnum;
 use MedixSolutionSuite\Service\DoctorServiceImpl;
+use WP_REST_Request;
 
 //enum MemberEnum: string {
 //

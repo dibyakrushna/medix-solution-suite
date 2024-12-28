@@ -5,6 +5,8 @@ namespace MedixSolutionSuite\Service;
 
 use MedixSolutionSuite\Service\DoctorServiceInterface;
 use MedixSolutionSuite\Util\Request;
+use MedixSolutionSuite\DTO\DoctorRequestDTO;
+use WP_REST_Request;
 
 /**
  * Description of DoctorServiceImpl
@@ -21,7 +23,7 @@ class DoctorServiceImpl implements DoctorServiceInterface {
         
     }
 
-    public function save(Request $request) {
-        print_r($request->all());
+    public function save(DoctorRequestDTO $doctorRequestDto) {
+        print_r($doctorRequestDto);
     }
 }

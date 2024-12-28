@@ -19,7 +19,7 @@ class FormCompositComponent implements FormComponentInterface {
     private $extra_attr = [];
     private $classes = [];
 
-    public function __construct(array $attrs) {
+    public function __construct( array $attrs ) {
         $default_attr = [
             "id" => "",
             "method" => "",
@@ -28,25 +28,25 @@ class FormCompositComponent implements FormComponentInterface {
             "classes" => [],
         ];
 
-        $attrs = array_merge($default_attr, $attrs);
+        $attrs = array_merge( $default_attr, $attrs );
 
-        $this->id = $attrs['id'];
-        $this->method = $attrs['method'];
-        $this->classes = $attrs["classes"];
-        $this->action = $attrs["action"];
-        $this->extra_attr = $attrs['extra_attr'];
+        $this->id = $attrs[ 'id' ];
+        $this->method = $attrs[ 'method' ];
+        $this->classes = $attrs[ "classes" ];
+        $this->action = $attrs[ "action" ];
+        $this->extra_attr = $attrs[ 'extra_attr' ];
     }
 
-    public function add(FormComponentInterface $component) {
+    public function add( FormComponentInterface $component ) {
         $this->fields[] = $component;
     }
 
     public function render(): string {
 
-        $class_attr = implode(" ", $this->classes);
+        $class_attr = implode( " ", $this->classes );
         $extra_attr_str = null;
-        if (is_array($this->extra_attr)) {
-            foreach ($this->extra_attr as $key => $value) {
+        if ( is_array( $this->extra_attr ) ) {
+            foreach ( $this->extra_attr as $key => $value ) {
                 $extra_attr_str .= "$key=\"$value\" ";
             }
         }
@@ -54,18 +54,19 @@ class FormCompositComponent implements FormComponentInterface {
         ob_start();
         ?>
         <form 
-            id="<?= esc_attr($this->id) ?>"
-            class="<?= esc_attr($class_attr) ?>"
-            action="<?= esc_attr($this->action) ?>"
-            <?= esc_attr($extra_attr_str) ?>>
+            method="<?= esc_attr( $this->method ) ?>"
+            id="<?= esc_attr( $this->id ) ?>"
+            class="<?= esc_attr( $class_attr ) ?>"
+            action="<?= esc_attr( $this->action ) ?>"
+            <?= esc_attr( $extra_attr_str ) ?>>
                 <?php wp_nonce_field(); ?>
-                <?php foreach ($this->fields as $key => $field) : ?>
+                <?php foreach ( $this->fields as $key => $field ) : ?>
                 <h1 class="wp-heading-inline">
-                    <?php esc_html_e($field->header, MSS_TEXT_DOMAIN) ?>			
+                    <?php esc_html_e( $field->header, MSS_TEXT_DOMAIN ) ?>			
                 </h1>
                 <?= $field->render() ?>
             <?php endforeach; ?>
-
+            <?= get_submit_button( __( "Submit", MSS_TEXT_DOMAIN ) ) ?>
         </form>
         <?php
         return ob_get_clean();

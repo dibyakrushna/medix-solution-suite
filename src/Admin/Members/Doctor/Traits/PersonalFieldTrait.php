@@ -6,7 +6,7 @@ namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 
 use MedixSolutionSuite\Enums\GenderEnum;
 
-trait InputFieldTrait {
+trait PersonalFieldTrait {
 
     private function first_name_input_field( array $form_values ): ?array {
 
@@ -52,21 +52,21 @@ trait InputFieldTrait {
                     "value" => esc_html( GenderEnum::FEMALE->value ),
                     "label" => __( "Female", MSS_TEXT_DOMAIN ),
                     "id" => "mss_admin_doctor_gender_female",
-                    "name" => "mss_admin_doctor_gender_female",
+                    "name" => "mss_admin_doctor_gender",
                     "classes" => [ "regular-text" ]
                 ],
                 [
                     "value" => esc_html( GenderEnum::MALE->value ),
                     "label" => esc_html( "Male", MSS_TEXT_DOMAIN ),
                     "id" => "mss_admin_doctor_gender_male",
-                    "name" => "mss_admin_doctor_gender_female",
+                    "name" => "mss_admin_doctor_gender",
                     "classes" => [ "regular-text" ]
                 ],
                 [
                     "value" => esc_html( GenderEnum::OTHER->value ),
                     "label" => esc_html( "Other", MSS_TEXT_DOMAIN ),
                     "id" => "mss_admin_doctor_gender_other",
-                    "name" => "mss_admin_doctor_gender_other",
+                    "name" => "mss_admin_doctor_gender",
                     "classes" => [ "regular-text", "other" ]
                 ]
             ]
@@ -126,6 +126,68 @@ trait InputFieldTrait {
                 $result = [];
                 if ( !is_null( $form_values[ 'mss_admin_doctor_email' ] ) ) {
                     $result[ 'value' ] = esc_attr( $form_values[ 'mss_admin_doctor_email' ] );
+                }
+                return $result;
+            },
+        ];
+    }
+
+    /**
+     * @since 1.0.0
+     * * */
+    private function nationality_input_field( array $form_values ): ?array {
+        return [
+            "header" => esc_html( "Nationality", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Nationality of doctor", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_nationality",
+            "name" => "mss_admin_doctor_nationality",
+            "extra_attr" => function ( $form_values ): ?array {
+                $result = [];
+                if ( !is_null( $form_values[ 'mss_admin_doctor_nationality' ] ) ) {
+                    $result[ 'value' ] = esc_attr( $form_values[ 'mss_admin_doctor_nationality' ] );
+                }
+                return $result;
+            },
+        ];
+    }
+
+    /**
+     * @since 1.0.0
+     * ** */
+    private function address_text_area_field( array $form_values ): ?array {
+        $return = [];
+
+        $return = [
+            "header" => esc_html( "Address", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Address of doctor", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_address",
+            "name" => "mss_admin_doctor_address",
+            "classes" => [ "regular-text" ],
+            "extra_attr" => [
+                "rows" => "5",
+                "cols" => "30"
+            ],
+        ];
+        if ( !is_null( $form_values[ 'mss_admin_doctor_address' ] ) ) {
+            $return[ 'value' ] = esc_attr( $form_values[ 'mss_admin_doctor_address' ] );
+        }
+        return $return;
+    }
+
+    /**
+     * @since 1.0.0
+     * * */
+    private function website_input_field( array $form_values ): ?array {
+        return [
+            "type" => "url",
+            "header" => esc_html( "Website", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Website of doctor", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_website",
+            "name" => "mss_admin_doctor_website",
+            "extra_attr" => function ( $form_values ): ?array {
+                $result = [];
+                if ( !is_null( $form_values[ 'mss_admin_doctor_website' ] ) ) {
+                    $result[ 'value' ] = esc_attr( $form_values[ 'mss_admin_doctor_website' ] );
                 }
                 return $result;
             },

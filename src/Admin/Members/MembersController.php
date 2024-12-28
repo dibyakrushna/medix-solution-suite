@@ -1,5 +1,7 @@
 <?php
+
 declare (strict_types=1);
+
 namespace MedixSolutionSuite\Admin\Members;
 
 /**
@@ -11,10 +13,8 @@ class MembersController {
 
 //put your code here
     public function __construct() {
-               
-        
     }
-    
+
     public function view(): string {
         
     }
@@ -22,4 +22,5 @@ class MembersController {
     public function add(): string {
         
     }
+
 }
