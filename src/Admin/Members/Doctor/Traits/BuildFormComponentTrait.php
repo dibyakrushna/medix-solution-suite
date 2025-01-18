@@ -1,30 +1,20 @@
 <?php
 
-declare (strict_type=1);
+declare (strict_types=1);
 
 namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 
 use MedixSolutionSuite\Util\FormBuilder\FormBuilder;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\PersonalFieldTrait;
 use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
+use WP_Error;
 
 trait BuildFormComponentTrait {
 
     use PersonalFieldTrait;
 
     private function build_component( WP_Error|DoctorDTO $value = null ): ?string {
-        $default_values = [
-            "mss_admin_doctor_first_name" => null,
-            "mss_admin_doctor_last_name" => null,
-            "mss_admin_doctor_gender" => null,
-            "mss_admin_doctor_dob" => null,
-            "mss_admin_doctor_phone_num" => null,
-            "mss_admin_doctor_email" => null,
-            "mss_admin_doctor_nationality" => null,
-            "mss_admin_doctor_address" => null,
-            "mss_admin_doctor_website" => null
-        ];
-        $form_values = array_merge( $default_values, $value );
+       
         $form_builder_components = $this->formComponent( $value );
         $personal_table_component = FormBuilder::get_form_component( 'table', $this->build_table_attr() );
         $form_componet = FormBuilder::get_form_component( 'form', $this->build_form_attr() );
@@ -49,17 +39,17 @@ trait BuildFormComponentTrait {
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * ** */
-    private function formComponent( array $form_values ): array {
+    private function formComponent( WP_Error|DoctorDTO $form_values = null  ): array {
         return [
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->first_name_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->last_name_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->gender_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->dob_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->email_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->phone_number_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nationality_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'textarea', $this->address_text_area_field( $form_values ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->website_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->last_name_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->gender_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->dob_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->email_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->phone_number_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nationality_input_field( $form_values ) ) ),
+//            FormBuilder::get_form_component( 'textarea', $this->address_text_area_field( $form_values ) ),
+//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->website_input_field( $form_values ) ) ),
         ];
     }
 

@@ -1,24 +1,27 @@
 <?php
 
-declare (strict_type=1);
+declare (strict_types=1);
 
 namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 
 use MedixSolutionSuite\Enums\GenderEnum;
+use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
+use WP_Error;
 
 trait PersonalFieldTrait {
-
-    private function first_name_input_field( array $form_values ): ?array {
-
-        return [
-            "extra_attr" => function ( $form_values ): ?array {
-                $result = [];
-                if ( !is_null( $form_values[ 'mss_admin_doctor_first_name' ] ) ) {
-                    $result[ 'value' ] = $form_values[ 'mss_admin_doctor_first_name' ];
-                }
-                return $result;
-            },
-        ];
+    /**
+     * @since 1.0.0
+     * **/
+    private function first_name_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
+        $result = array();
+        if ( !is_null( $form_values ) && is_wp_error( $form_values ) && !empty( trim( $form_values->get_error_message( "mss_admin_doctor_first_name" ) ) ) ) {
+            $result[ "error" ] = true;
+            $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_first_name" );
+        }
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_first_name() ) ) ) {
+            $result[ 'value' ] = $form_values->get_first_name();
+        }
+        return $result;
     }
 
     /**

@@ -44,17 +44,17 @@ class AdminDoctorController extends MembersController {
         return $this->get_template_part( "admin-doctor-table", [ "mss_admin_doctor_table_object" => $this->admin_doctor_table ] );
     }
 
-    public function add( WP_Error|DoctorDTO $data = null): string {
-        return $this->build_component( $data );
+    public function add(  WP_Error|DoctorDTO $value = null): string {
+        return $this->build_component( $value );
         //return $this->get_template_part( "admin-doctor-add-new-form", [ "form_data" => $args ] );
     }
 
     public function save(): ?string {
         $validate = $this->validate( $this->request, $this->doctorDTO, $this->wp_error );
         if ( is_wp_error( $validate ) ) {
-            print_r( $validate );
-            exit();
-            //return $this->add( $validate );
+//            print_r( $validate );
+//            exit();
+            return $this->add( $validate );
         }
         $request_dto = $this->doctor_service->save( $validate );
         return $this->add( $request_dto );
