@@ -12,7 +12,8 @@ use MedixSolutionSuite\Admin\Members\Home\AdminMemberHomeController;
 use MedixSolutionSuite\Util\Request;
 use MedixSolutionSuite\Enums\MemberEnum;
 use MedixSolutionSuite\Service\DoctorServiceImpl;
-use WP_REST_Request;
+use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
+use WP_Error;
 
 //enum MemberEnum: string {
 //
@@ -50,7 +51,9 @@ class MSSAdminMembersFactoriesImpl implements MSSAdminMembersFactory {
             MemberEnum::DOCTOR->value => new AdminDoctorController(
                     admin_doctor_table: new AdminDoctorTable,
                     request: new Request,
-                    doctor_service: new DoctorServiceImpl
+                    doctor_service: new DoctorServiceImpl,
+                    doctorDTO: new DoctorRequestDTO,
+                    wp_error: new WP_Error
             ),
             MemberEnum::PATIENT->value => new AdmminPatientController(),
             MemberEnum::HOME->value => new AdminMemberHomeController(),

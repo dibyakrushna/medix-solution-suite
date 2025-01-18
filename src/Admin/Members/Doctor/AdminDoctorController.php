@@ -12,8 +12,9 @@ use MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent\InputField;
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent\TableComposite;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\BuildFormComponentTrait;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\DoctorRequestValidationTrait;
-use MedixSolutionSuite\DTO\DoctorRequestDTO;
-use WP_REST_Request;
+use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
+use MedixSolutionSuite\DTO\Doctor\DoctorValidationResponseDTO;
+use WP_Error;
 
 /**
  * Description of DoctorTable
@@ -31,6 +32,8 @@ class AdminDoctorController extends MembersController {
             private AdminDoctorTable $admin_doctor_table,
             private Request $request,
             private DoctorServiceImpl $doctor_service,
+            private DoctorDTO $doctorDTO,
+            private WP_Error $wp_error
     ) {
 
         //  echo "Hello I am from Doctor";
@@ -41,20 +44,20 @@ class AdminDoctorController extends MembersController {
         return $this->get_template_part( "admin-doctor-table", [ "mss_admin_doctor_table_object" => $this->admin_doctor_table ] );
     }
 
-    public function add( array $args = [] ): string {
-        return $this->build_component();
+    public function add( WP_Error|DoctorDTO $data = null): string {
+        return $this->build_component( $data );
         //return $this->get_template_part( "admin-doctor-add-new-form", [ "form_data" => $args ] );
     }
 
     public function save(): ?string {
-        try {
-
-            $validate = $this->validate( $this->request, new DoctorRequestDTO );
-            $this->doctor_service->save( $validate );
-            return $this->add();
-        } catch ( ErrorException $exc ) {
-            return $this->add();
+        $validate = $this->validate( $this->request, $this->doctorDTO, $this->wp_error );
+        if ( is_wp_error( $validate ) ) {
+            print_r( $validate );
+            exit();
+            //return $this->add( $validate );
         }
+        $request_dto = $this->doctor_service->save( $validate );
+        return $this->add( $request_dto );
     }
 
     private function get_template_part( string $fileName, array $args = [] ): string {

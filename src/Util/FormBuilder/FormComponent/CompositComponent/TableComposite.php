@@ -55,7 +55,7 @@ class TableComposite implements FormComponentInterface {
             <tbody>
                 <?php foreach ($this->fields as $key => $field) : ?>
                     <tr>
-                        <th><?= $field->header ?> </th>
+                        <th> <label for="<?= esc_attr( $field->id ) ?>"><?= $field->header ?> </label></th>
                         <td><?= $field->render() ?></td>
                     </tr>
                 <?php endforeach; ?>

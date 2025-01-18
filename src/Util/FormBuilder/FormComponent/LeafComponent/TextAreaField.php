@@ -13,15 +13,57 @@ use MedixSolutionSuite\Util\FormBuilder\FormComponent\FormComponentInterface;
 class TextAreaField implements FormComponentInterface {
 
     /**
-     * 
+     * @var String Description
      * * */
-    private $id = null;
-    private $classes = [];
-    private $label = null;
-    public $header = null;
-    private $name = null;
-    private $extra_attr = [];
-    private $value = null;
+    public string $id = '';
+
+    /**
+     * @var array 
+     * @since 1.0.0
+     * * */
+    private array $classes = [];
+
+    /**
+     * @var String
+     * @since 1.0.0
+     * * */
+    private string $label = '';
+
+    /**
+     * @var String
+     * @since 1.0.0
+     * * */
+    public string $header = '';
+
+    /**
+     * @var String
+     * @since 1.0.0
+     * * */
+    private string $name = '';
+
+    /**
+     * @var array 
+     * @since 1.0.0
+     * * */
+    private array $extra_attr = [];
+
+    /**
+     * @var String
+     * @since 1.0.0
+     * * */
+    private string $value = '';
+
+    /**
+     * @var String
+     * @since 1.0.0
+     * * */
+    private string $description = "";
+
+    /**
+     * @var boolean
+     * @since 1.0.0
+     * * */
+    private bool $error = false;
 
     public function __construct( array $attr ) {
         $default_attr = [
@@ -31,7 +73,9 @@ class TextAreaField implements FormComponentInterface {
             "classes" => [],
             "label" => "",
             "header" => "",
-            "value" => ""
+            "value" => "",
+            "description" => "",
+            "error" => false
         ];
 
         $attr = array_merge( $default_attr, $attr );
@@ -43,6 +87,8 @@ class TextAreaField implements FormComponentInterface {
         $this->classes = $attr[ 'classes' ];
         $this->header = $attr[ 'header' ];
         $this->value = $attr[ 'value' ];
+        $this->description = $attr[ 'description' ];
+        $this->error = $attr[ 'error' ];
     }
 
     public function render(): string {
@@ -64,6 +110,9 @@ class TextAreaField implements FormComponentInterface {
             >
                 <?= esc_html( $this->value ) ?>
         </textarea>
+        <?php if ( !empty( trim( $this->description ) ) ) : ?>
+            <p class="description <?= $this->error ? 'error' : "" ?>"> <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?> </p>
+        <?php endif; ?>
         <?php
         return ob_get_clean();
     }
