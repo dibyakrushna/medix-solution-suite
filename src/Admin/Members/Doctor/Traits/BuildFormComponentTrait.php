@@ -14,7 +14,7 @@ trait BuildFormComponentTrait {
     use PersonalFieldTrait;
 
     private function build_component( WP_Error|DoctorDTO $value = null ): ?string {
-       
+
         $form_builder_components = $this->formComponent( $value );
         $personal_table_component = FormBuilder::get_form_component( 'table', $this->build_table_attr() );
         $form_componet = FormBuilder::get_form_component( 'form', $this->build_form_attr() );
@@ -39,17 +39,17 @@ trait BuildFormComponentTrait {
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * ** */
-    private function formComponent( WP_Error|DoctorDTO $form_values = null  ): array {
+    private function formComponent( WP_Error|DoctorDTO $form_values = null ): array {
         return [
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->first_name_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->last_name_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->gender_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->dob_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->email_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->phone_number_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nationality_input_field( $form_values ) ) ),
-//            FormBuilder::get_form_component( 'textarea', $this->address_text_area_field( $form_values ) ),
-//            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->website_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->last_name_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->gender_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->dob_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->email_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->phone_number_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nationality_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'textarea', $this->address_text_area_field( $form_values ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->website_input_field( $form_values ) ) ),
         ];
     }
 

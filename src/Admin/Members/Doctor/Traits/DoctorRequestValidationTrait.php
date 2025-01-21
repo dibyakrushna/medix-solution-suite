@@ -35,10 +35,18 @@ trait DoctorRequestValidationTrait {
         } else {
             $wp_error->add( "mss_admin_doctor_gender", __( "Gender is required", MSS_TEXT_DOMAIN ) );
         }
+        
+         //Checking DOB  is empty
+        if ( $request->has( 'mss_admin_doctor_dob' ) && !empty( $request->input( "mss_admin_doctor_dob" ) ) ) {
+            $doctorRequstDto->set_dob( $request->input( "mss_admin_doctor_dob" ) );
+        } else {
+            $wp_error->add( "mss_admin_doctor_dob", __( "DOB is required", MSS_TEXT_DOMAIN ) );
+        }
+
 
         //Checking email is empty
         if ( $request->has( 'mss_admin_doctor_email' ) && !empty( $request->input( "mss_admin_doctor_email" ) ) && filter_var( $request->input( "mss_admin_doctor_email" ), FILTER_VALIDATE_EMAIL ) ) {
-            $doctorRequstDto->set_email( $request->input( "mss_admin_doctor_gender" ) );
+            $doctorRequstDto->set_email( $request->input( "mss_admin_doctor_email" ) );
         } else {
             $wp_error->add( "mss_admin_doctor_email", __( "Eail is required or email is not valid", MSS_TEXT_DOMAIN ) );
         }
@@ -68,7 +76,8 @@ trait DoctorRequestValidationTrait {
         } else {
             $wp_error->add( "mss_admin_doctor_address", __( "Address is required", MSS_TEXT_DOMAIN ) );
         }
-        if( is_wp_error( $wp_error )){
+        
+        if( $wp_error->has_errors()){
             return $wp_error;
         }
 

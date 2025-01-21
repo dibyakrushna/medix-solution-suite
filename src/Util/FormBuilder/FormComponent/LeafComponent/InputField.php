@@ -120,16 +120,18 @@ class InputField implements FormComponentInterface {
                     id="<?= esc_attr( $option_value[ "id" ] ) ?>" 
                     class="<?= $option_value[ 'classes' ] ? esc_attr( implode( " ", $option_value[ 'classes' ] ) ) : "" ?>"
                     value ="<?= esc_attr( $option_value[ 'value' ] ) ?>"
+                     <?php selected( $option_value['selected'], true ); ?>
                     />
                 <label for="<?= esc_attr( $option_value[ "id" ] ) ?>">                   
                     <?php esc_html_e( $option_value[ 'label' ], MSS_TEXT_DOMAIN ) ?>
                 </label>
-                <?php if ( isset( $option_value[ 'description' ] ) && !empty( trim( $option_value[ 'description' ] ) ) ): ?>
-                    <p class="description <?= $option_value[ 'error' ] ? 'error' : "" ?>">
-                        <?php esc_html_e( $option_value[ 'description' ], MSS_TEXT_DOMAIN ) ?>
-                    </p>
-                <?php endif; ?>
+
             <?php endforeach; ?>
+            <?php if ( isset( $this->description ) && !empty( trim( $this->description ) ) ): ?>
+                <span class="description <?= $this->error ? 'error' : "" ?>">
+                    <?php esc_html_e( $this->description, MSS_TEXT_DOMAIN ) ?>
+                </span>
+            <?php endif; ?>
 
         <?php else : ?>
             <input 
@@ -140,7 +142,7 @@ class InputField implements FormComponentInterface {
                 class="<?= esc_attr( $class_attr ) ?>"
                 />
                 <?php if ( !empty( trim( $this->description ) ) ) : ?>
-                <p class="description <?= $this->error ? 'error' : "" ?>"> <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?> </p>
+                <span class="description <?= $this->error ? 'error' : "" ?>"> <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?> </span>
             <?php endif; ?>
         <?php endif; ?>
 

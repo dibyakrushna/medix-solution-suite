@@ -1,12 +1,14 @@
 <?php
+
 declare (strict_types=1);
 
 namespace MedixSolutionSuite\Service;
 
 use MedixSolutionSuite\Service\DoctorServiceInterface;
 use MedixSolutionSuite\Util\Request;
-use MedixSolutionSuite\DTO\DoctorRequestDTO;
-use WP_REST_Request;
+use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
+use MedixSolutionSuite\DTO\Doctor\DoctorResponseDTO;
+use WP_Error;
 
 /**
  * Description of DoctorServiceImpl
@@ -14,6 +16,7 @@ use WP_REST_Request;
  * @author dibya
  */
 class DoctorServiceImpl implements DoctorServiceInterface {
+
     //put your code here
     public function get_all_doctors() {
         
@@ -23,7 +26,8 @@ class DoctorServiceImpl implements DoctorServiceInterface {
         
     }
 
-    public function save(DoctorRequestDTO $doctorRequestDto) {
-        print_r($doctorRequestDto);
+    public function save( DoctorRequestDTO $doctorRequestDto ): WP_Error|DoctorResponseDTO {
+        print_r( $doctorRequestDto );
+        // wp_insert_user($userdata);
     }
 }

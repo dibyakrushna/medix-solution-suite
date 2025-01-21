@@ -52,8 +52,6 @@ class AdminDoctorController extends MembersController {
     public function save(): ?string {
         $validate = $this->validate( $this->request, $this->doctorDTO, $this->wp_error );
         if ( is_wp_error( $validate ) ) {
-//            print_r( $validate );
-//            exit();
             return $this->add( $validate );
         }
         $request_dto = $this->doctor_service->save( $validate );
