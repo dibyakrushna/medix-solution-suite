@@ -1,7 +1,16 @@
 <?php
 
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
+declare (strict_types=1);
 
+namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
+
+use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
+use WP_Error;
+
+if ( !trait_exists( "SystemAccessPermissionFieldTrait" ) ) {
+
+    trait SystemAccessPermissionFieldTrait {
+        
+    }
+
+}

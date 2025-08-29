@@ -4,6 +4,9 @@ declare (strict_type=1);
 
 namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 
+use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
+use WP_Error;
+
 trait ProfessionalFieldTrait {
 
     /**

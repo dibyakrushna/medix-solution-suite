@@ -119,11 +119,11 @@ class TextAreaField implements FormComponentInterface, LabelableInterface {
     }
 
     public function getHeader(): string {
-        $this->header;
+       return  $this->header;
         
     }
 
     public function getId(): string {
-        $this->id;
+        return $this->id;
     }
 }

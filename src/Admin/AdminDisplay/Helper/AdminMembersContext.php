@@ -16,8 +16,7 @@ class AdminMembersContext {
 
     public ?MembersController $membersController = null;
 
-    //put your code here
-    public function __construct(private MSSAdminMembersFactoriesImpl $factoriesImpl) {
+    public function __construct( private MSSAdminMembersFactoriesImpl $factoriesImpl ) {
         
     }
 
