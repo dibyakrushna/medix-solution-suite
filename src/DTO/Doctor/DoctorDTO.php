@@ -55,7 +55,12 @@ abstract class DoctorDTO {
      * @var string $address
      */
     private string $address = '';
-
+    
+    /**
+     * @var string
+     * @since 1.0.0
+     * **/
+   private string $specialization = "";
     // Getters and Setters
 
     public function get_first_name(): string {
@@ -128,5 +133,25 @@ abstract class DoctorDTO {
 
     public function set_address(string $address): void {
         $this->address = $address;
+    }
+    
+    /**
+     * Getter for Specialization 
+     * 
+     * @return string specialization 
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * **/
+    public function get_specialization():string{
+        return $this->specialization;
+    }
+    /**
+     * Setter 
+     * @param string $specialization 
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * **/
+    public function set_specialization( string $specialization ){
+        $this->specialization = $specialization;
     }
 }

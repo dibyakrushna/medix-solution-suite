@@ -11,8 +11,14 @@ use WP_Error;
 trait PersonalFieldTrait {
 
     /**
+     * Adding first name
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function first_name_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
         $result = array();
         if ( !is_null( $form_values ) && is_wp_error( $form_values ) && !empty( trim( $form_values->get_error_message( "mss_admin_doctor_first_name" ) ) ) ) {
@@ -26,8 +32,14 @@ trait PersonalFieldTrait {
     }
 
     /**
+     * Adding last name
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function last_name_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
 
         $result = [
@@ -50,9 +62,15 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-    /**
+  /**
+     * Adding gender
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function gender_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
         $result = [
             "header" => esc_html( "Gender", MSS_TEXT_DOMAIN ),
@@ -92,9 +110,15 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-    /**
+   /**
+     * Adding DOB
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function dob_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
         $result = [
             "type" => "date",
@@ -117,8 +141,14 @@ trait PersonalFieldTrait {
     }
 
     /**
+     * Adding phone number
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function phone_number_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
         $result = [
             "header" => esc_html( "Phone Number", MSS_TEXT_DOMAIN ),
@@ -138,9 +168,15 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-    /**
+   /**
+     * Adding email
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function email_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
         $result = [
             "type" => "email",
@@ -161,62 +197,21 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-    /**
+   
+
+   
+
+   /**
+     * Adding Website url
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
      * @since 1.0.0
-     * * */
-    private function nationality_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
-        $result = [
-            "header" => esc_html( "Nationality", MSS_TEXT_DOMAIN ),
-            "label" => esc_html( "Nationality of doctor", MSS_TEXT_DOMAIN ),
-            "id" => "mss_admin_doctor_nationality",
-            "name" => "mss_admin_doctor_nationality",
-        ];
-
-        if ( !is_null( $form_values ) && is_wp_error( $form_values ) && !empty( trim( $form_values->get_error_message( "mss_admin_doctor_nationality" ) ) ) ) {
-            $result[ 'error' ] = true;
-            $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_nationality" );
-        }
-
-        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_nationality() ) ) ) {
-            $result[ 'value' ] = $form_values->get_nationality();
-        }
-
-        return $result;
-    }
-
-    /**
-     * @since 1.0.0
-     * ** */
-    private function address_text_area_field( WP_Error|DoctorDTO $form_values = null ): ?array {
-        $result = [];
-
-        $result = [
-            "header" => esc_html( "Address", MSS_TEXT_DOMAIN ),
-            "label" => esc_html( "Address of doctor", MSS_TEXT_DOMAIN ),
-            "id" => "mss_admin_doctor_address",
-            "name" => "mss_admin_doctor_address",
-            "classes" => [ "regular-text" ],
-            "extra_attr" => [
-                "rows" => "5",
-                "cols" => "30"
-            ],
-        ];
-        if ( !is_null( $form_values ) && is_wp_error( $form_values ) && !empty( trim( $form_values->get_error_message( "mss_admin_doctor_address" ) ) ) ) {
-            $result[ 'error' ] = true;
-            $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_address" );
-        }
-
-        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_address() ) ) ) {
-            $result[ 'value' ] = $form_values->get_address();
-        }
-        return $result;
-    }
-
-    /**
-     * @since 1.0.0
-     * * */
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
     private function website_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
-        $result =  [
+        $result = [
             "type" => "url",
             "header" => esc_html( "Website", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Website of doctor", MSS_TEXT_DOMAIN ),
@@ -233,5 +228,198 @@ trait PersonalFieldTrait {
             $result[ 'value' ] = $form_values->get_website();
         }
         return $result;
+    }
+    /**
+     * Adding profile picture
+     * 
+     * @param WP_Error | DoctorDTO $form_values
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     */
+    private function profile_picture_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
+         $result = [
+            "type" => "file",
+            "header" => esc_html( "Profile Picture", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Profile Picture", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_profile_picture",
+            "name" => "mss_admin_doctor_profile_picture",
+        ];
+        return $result;
+        
+    }
+    /**
+     * Adding Address House Number
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function house_number(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "House Number", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "House Number", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_house_number",
+            "name" => "mss_admin_doctor_house_number",
+        ];
+        return $result;
+        
+    }
+    
+    /**
+     * Adding Street Name
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function street_name(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "Street Name", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Street Name", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_street_name",
+            "name" => "mss_admin_doctor_street_name",
+        ];
+        return $result;
+        
+    }
+    
+    /**
+     * Adding Landmark
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function landmark(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "Landmark", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Landmark", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_landmark",
+            "name" => "mss_admin_doctor_landmark",
+        ];
+        return $result;
+        
+    }
+     /**
+     * Adding Address Line 1
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function address_line_1(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "Address Line 1", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Address Line 1", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_address_line_1",
+            "name" => "mss_admin_doctor_address_line_1",
+        ];
+        return $result;
+        
+    }
+     /**
+     * Adding Address Line 2
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function address_line_2(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "Address Line 2", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Address Line 2", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_address_line_2",
+            "name" => "mss_admin_doctor_address_line_2",
+        ];
+        return $result;
+        
+    }
+     /**
+     * Adding Address City
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function city(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "City", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "City", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_city",
+            "name" => "mss_admin_doctor_city",
+        ];
+        return $result;
+        
+    }
+    /**
+     * Adding Address State
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function state(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "State", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "State", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_state",
+            "name" => "mss_admin_doctor_state",
+        ];
+        return $result;
+        
+    }
+     /**
+     * Adding Address Postal Code
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function postal_code(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "Postcode / ZIP", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Postcode / ZIP", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_postal_code",
+            "name" => "mss_admin_doctor_postal_code",
+        ];
+        return $result;
+        
+    }
+     /**
+     * Adding Address Country
+     * @return array $result
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * @access private
+     * **/
+    private function country(  WP_Error|DoctorDTO $form_values = null ):?array{
+        
+         $result = [
+            "type" => "text",
+            "header" => esc_html( "Country", MSS_TEXT_DOMAIN ),
+            "label" => esc_html( "Country", MSS_TEXT_DOMAIN ),
+            "id" => "mss_admin_doctor_country",
+            "name" => "mss_admin_doctor_country",
+        ];
+        return $result;
+        
     }
 }

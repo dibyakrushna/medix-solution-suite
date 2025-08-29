@@ -7,4 +7,5 @@ enum FormComponentEnum: string {
     case TABLE = "table";
     case FORM  = "form" ;
     case TEXTAREA = "textarea";
+    case SELECT = "select";
 }

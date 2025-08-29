@@ -4,18 +4,19 @@ declare(strict_types=1);
 namespace MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent;
 
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\FormComponentInterface;
+use MedixSolutionSuite\Util\FormBuilder\FormComponent\LabelableInterface;
 
 /**
  * Description of TextAreaField
  *
  * @author dibya
  */
-class TextAreaField implements FormComponentInterface {
+class TextAreaField implements FormComponentInterface, LabelableInterface {
 
     /**
      * @var String Description
      * * */
-    public string $id = '';
+    private string $id = '';
 
     /**
      * @var array 
@@ -33,7 +34,7 @@ class TextAreaField implements FormComponentInterface {
      * @var String
      * @since 1.0.0
      * * */
-    public string $header = '';
+    private string $header = '';
 
     /**
      * @var String
@@ -115,5 +116,14 @@ class TextAreaField implements FormComponentInterface {
         <?php endif; ?>
         <?php
         return ob_get_clean();
+    }
+
+    public function getHeader(): string {
+        $this->header;
+        
+    }
+
+    public function getId(): string {
+        $this->id;
     }
 }

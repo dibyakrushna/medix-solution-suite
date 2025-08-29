@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent;
 
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\FormComponentInterface;
+use MedixSolutionSuite\Util\FormBuilder\FormComponent\LabelableInterface;
 
 /**
  * Description of InputField
  *
  * @author dibya
  */
-class InputField implements FormComponentInterface {
+class InputField implements FormComponentInterface, LabelableInterface {
 
     /**
      * @var string 
@@ -34,7 +35,7 @@ class InputField implements FormComponentInterface {
      * @var string 
      * @since 1.0.0
      * * */
-    public string $id = '';
+    private string $id = '';
 
     /**
      * @var array
@@ -52,7 +53,7 @@ class InputField implements FormComponentInterface {
      * @var string 
      * @since 1.0.0
      * * */
-    public string $header = '';
+    private string $header = '';
 
     /**
      * @var string 
@@ -149,5 +150,13 @@ class InputField implements FormComponentInterface {
 
         <?php
         return ob_get_clean();
+    }
+
+    public function getHeader(): string {
+        return $this->header;
+    }
+
+    public function getId(): string {
+        return $this->id;
     }
 }
