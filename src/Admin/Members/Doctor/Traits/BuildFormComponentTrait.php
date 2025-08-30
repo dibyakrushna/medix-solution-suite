@@ -10,6 +10,9 @@ use MedixSolutionSuite\Admin\Members\Doctor\Traits\ProfessionalFieldTrait;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\AdditionalInfoFieldTrait;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\EmergencyContactFieldTrait;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\EmployementIfoFieldTrait;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\EducationalQualificationFieldTrait;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\AvailabilityFieldTrait;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\SystemAccessPermissionFieldTrait;
 use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
 use WP_Error;
 
@@ -19,7 +22,10 @@ trait BuildFormComponentTrait {
         ProfessionalFieldTrait,
         AdditionalInfoFieldTrait,
         EmergencyContactFieldTrait,
-        EmployementIfoFieldTrait;
+        EmployementIfoFieldTrait,
+        EducationalQualificationFieldTrait,
+        AvailabilityFieldTrait,
+        SystemAccessPermissionFieldTrait;
 
     /**
      * Initial point to build the for 
@@ -193,13 +199,13 @@ trait BuildFormComponentTrait {
     private function educational_qualification_form_component( WP_Error|DoctorDTO $form_values = null ): ?array {
 
         $componets = [
-            FormBuilder::get_form_component( 'select', $this->specialization_select_field( $form_values ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->year_of_experience_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->medical_registration_number_iput_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->consulation_fee_iput_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->certificate_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->degrees_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->university_attended_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->graduation_year_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->affiliations_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->certifications_accreditations_input_field( $form_values ) ) ),
         ];
-        return apply_filters( "mss_admin_doctor_professinoal_form_componet", $componets, $form_values );
+        return apply_filters( "mss_admin_doctor_educational_qualification_form_componet", $componets, $form_values );
     }
 
     /**
@@ -210,13 +216,10 @@ trait BuildFormComponentTrait {
     private function availability_form_component( WP_Error|DoctorDTO $form_values = null ): ?array {
 
         $componets = [
-            FormBuilder::get_form_component( 'select', $this->specialization_select_field( $form_values ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->year_of_experience_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->medical_registration_number_iput_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->consulation_fee_iput_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->certificate_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'select', $this->working_days_select_field( $form_values ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->consultation_type_input_field( $form_values ) ) ),
         ];
-        return apply_filters( "mss_admin_doctor_professinoal_form_componet", $componets, $form_values );
+        return apply_filters( "mss_admin_doctor_availability_form_componet", $componets, $form_values );
     }
 
     /**
@@ -233,7 +236,7 @@ trait BuildFormComponentTrait {
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->designation_input_field( $form_values ) ) ),
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->supervisor_input_field( $form_values ) ) ),
         ];
-        return apply_filters( "mss_admin_doctor_professinoal_form_componet", $componets, $form_values );
+        return apply_filters( "mss_admin_doctor_employement_info_form_componet", $componets, $form_values );
     }
 
     /**
@@ -248,7 +251,7 @@ trait BuildFormComponentTrait {
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->relationship_input_field( $form_values ) ) ),
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->emergency_phone_input_field( $form_values ) ) ),
         ];
-        return apply_filters( "mss_admin_doctor_professinoal_form_componet", $componets, $form_values );
+        return apply_filters( "mss_admin_doctor_emergency_conatct_form_componet", $componets, $form_values );
     }
 
     /**
@@ -259,13 +262,11 @@ trait BuildFormComponentTrait {
     private function system_access_permission_form_component( WP_Error|DoctorDTO $form_values = null ): ?array {
 
         $componets = [
-            FormBuilder::get_form_component( 'select', $this->specialization_select_field( $form_values ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->year_of_experience_input_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->medical_registration_number_iput_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->consulation_fee_iput_field( $form_values ) ) ),
-            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->certificate_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->username_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nickname_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->display_name_input_field( $form_values ) ) ),
         ];
-        return apply_filters( "mss_admin_doctor_professinoal_form_componet", $componets, $form_values );
+        return apply_filters( "mss_admin_doctor_system_access_permission_form_componet", $componets, $form_values );
     }
 
     /**
@@ -281,7 +282,7 @@ trait BuildFormComponentTrait {
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->social_media_profile_link_input_field( $form_values ) ) ),
             FormBuilder::get_form_component( 'textarea', $this->personal_statement_textarea_field( $form_values ) ),
         ];
-        return apply_filters( "mss_admin_doctor_professinoal_form_componet", $componets, $form_values );
+        return apply_filters( "mss_admin_doctor_additional_info_form_componet", $componets, $form_values );
     }
 
     private function build_input_attr( $attr = [] ): ?array {

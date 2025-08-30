@@ -8,8 +8,6 @@ use MedixSolutionSuite\Admin\Members\Doctor\AdminDoctorTable;
 use MedixSolutionSuite\Admin\Members\MembersController;
 use MedixSolutionSuite\Util\Request;
 use MedixSolutionSuite\Service\DoctorServiceImpl;
-use MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent\InputField;
-use MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent\TableComposite;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\BuildFormComponentTrait;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\DoctorRequestValidationTrait;
 use MedixSolutionSuite\DTO\Doctor\DoctorDTO;

@@ -112,7 +112,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
 
         ob_start();
         ?>
-        <?php if ( "radio" === $this->type ): ?>
+        <?php if ( "radio" === $this->type || "checkbox" === $this->type ): ?>
             <?php foreach ( $this->options as $option_key => $option_value ) : ?>
                 <input 
                     type="<?= esc_attr( $this->type ) ?>" 
