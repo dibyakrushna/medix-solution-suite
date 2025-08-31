@@ -109,7 +109,7 @@ class SelectField implements FormComponentInterface, LabelableInterface {
 
         if ( is_array( $this->extra_attr ) ) {
             foreach ( $this->extra_attr as $key => $value ) {
-                $extra_attr_str .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( $value ) );
+                $extra_attr_str .= sprintf( ' %s=%s', esc_attr( $key ), esc_attr( $value ) );
             }
         }
 

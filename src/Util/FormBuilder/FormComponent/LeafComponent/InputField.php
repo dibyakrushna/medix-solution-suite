@@ -105,8 +105,8 @@ class InputField implements FormComponentInterface, LabelableInterface {
         $class_attr = implode( " ", $this->classes );
         $extra_attr_str = null;
         if ( is_array( $this->extra_attr ) ) {
-            foreach ( $this->extra_attr as $key => $value ) {
-                $extra_attr_str .= " $key=$value";
+              foreach ( $this->extra_attr as $key => $value ) {
+                $extra_attr_str .= sprintf( ' %s=%s', esc_attr( $key ), esc_attr( $value ) );
             }
         }
 

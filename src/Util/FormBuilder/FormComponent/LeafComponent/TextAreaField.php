@@ -98,7 +98,7 @@ class TextAreaField implements FormComponentInterface, LabelableInterface {
         $extra_attr_str = null;
         if ( is_array( $this->extra_attr ) ) {
             foreach ( $this->extra_attr as $key => $value ) {
-                $extra_attr_str .= " $key=$value";
+                $extra_attr_str .= sprintf( ' %s=%s', esc_attr( $key ), esc_attr( $value ) );
             }
         }
         ob_start();
@@ -119,8 +119,7 @@ class TextAreaField implements FormComponentInterface, LabelableInterface {
     }
 
     public function getHeader(): string {
-       return  $this->header;
-        
+        return $this->header;
     }
 
     public function getId(): string {

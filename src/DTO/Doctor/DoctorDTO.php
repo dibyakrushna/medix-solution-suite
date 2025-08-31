@@ -11,10 +11,10 @@ namespace MedixSolutionSuite\DTO\Doctor;
  */
 abstract class DoctorDTO {
 
-   /**
-    * @var string  First name 
-    * @since 1.0.0
-    * **/
+    /**
+     * @var string  First name 
+     * @since 1.0.0
+     * * */
     private string $first_name = '';
     private string $last_name = '';
     private string $gender = '';
@@ -31,17 +31,14 @@ abstract class DoctorDTO {
     private string $postcode = '';
     private string $country = '';
     private string $website = '';
-    private string $profile_picture = '';
     private string $specialization = '';
     private string $year_of_experience = '';
     private string $medical_registration_number = '';
     private string $consultation_fees = '';
-    private string $medical_license = '';
     private string $degrees = '';
     private string $college_university = '';
     private string $year_of_graduation = '';
     private string $affiliations = '';
-    private string $certifications = '';
     private string $working_days = '';
     private string $consultation_type = '';
     private string $employment_type = '';
@@ -60,7 +57,12 @@ abstract class DoctorDTO {
     private string $social_media_profile = '';
     private string $personal_statement = '';
 
-    // ==================== Getters & Setters ====================
+    /**
+     * @var int ID
+     * @since 1.0.0
+     * @author dibya<dibyakrishna@gmail.com>
+     * * */
+    private int $ID = 0;
 
     public function get_first_name(): string {
         return $this->first_name;
@@ -190,14 +192,6 @@ abstract class DoctorDTO {
         $this->website = $website;
     }
 
-    public function get_profile_picture(): string {
-        return $this->profile_picture;
-    }
-
-    public function set_profile_picture( string $profile_picture ): void {
-        $this->profile_picture = $profile_picture;
-    }
-
     public function get_specialization(): string {
         return $this->specialization;
     }
@@ -230,14 +224,6 @@ abstract class DoctorDTO {
         $this->consultation_fees = $consultation_fees;
     }
 
-    public function get_medical_license(): string {
-        return $this->medical_license;
-    }
-
-    public function set_medical_license( string $medical_license ): void {
-        $this->medical_license = $medical_license;
-    }
-
     public function get_degrees(): string {
         return $this->degrees;
     }
@@ -268,14 +254,6 @@ abstract class DoctorDTO {
 
     public function set_affiliations( string $affiliations ): void {
         $this->affiliations = $affiliations;
-    }
-
-    public function get_certifications(): string {
-        return $this->certifications;
-    }
-
-    public function set_certifications( string $certifications ): void {
-        $this->certifications = $certifications;
     }
 
     public function get_working_days(): string {
@@ -412,5 +390,25 @@ abstract class DoctorDTO {
 
     public function set_personal_statement( string $personal_statement ): void {
         $this->personal_statement = $personal_statement;
+    }
+
+    /**
+     * Getter for ID
+     * @return int $ID
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function get_id(): ?int {
+        $this->ID;
+    }
+
+    /**
+     * Setter for ID
+     * @return int $ID
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function set_id( int $id ) {
+        $this->ID = $id;
     }
 }

@@ -430,7 +430,9 @@ trait BuildFormComponentTrait {
             "id" => "mss-doctor-form",
             "method" => "POST",
             "action" => esc_url( admin_url( "admin.php" ) . "?page=mss_members&controller=doctor&action=save" ),
-            "extra_attr" => [],
+            "extra_attr" => [
+                "enctype" => "multipart/form-data"
+            ],
             "classes" => [ "mss-admin-doctor" ],
         ];
 
