@@ -12,6 +12,7 @@ use MedixSolutionSuite\Admin\Members\Doctor\Traits\BuildFormComponentTrait;
 use MedixSolutionSuite\Admin\Members\Doctor\Traits\DoctorRequestValidationTrait;
 use MedixSolutionSuite\DTO\Doctor\DoctorDTO;
 use MedixSolutionSuite\DTO\Doctor\DoctorValidationResponseDTO;
+use MedixSolutionSuite\Mapper\Doctor\DoctorRequestMapper;
 use WP_Error;
 
 /**
@@ -31,7 +32,8 @@ class AdminDoctorController extends MembersController {
             private Request $request,
             private DoctorServiceImpl $doctor_service,
             private DoctorDTO $doctorDTO,
-            private WP_Error $wp_error
+            private WP_Error $wp_error,
+            private DoctorRequestMapper $doctor_request_mapper,
     ) {
 
         //  echo "Hello I am from Doctor";
@@ -48,12 +50,13 @@ class AdminDoctorController extends MembersController {
     }
 
     public function save(): ?string {
-        $validate = $this->validate( $this->request, $this->doctorDTO, $this->wp_error );
-        if ( is_wp_error( $validate ) ) {
-            return $this->add( $validate );
-        }
-        $request_dto = $this->doctor_service->save( $validate );
-        return $this->add( $request_dto );
+//        $validate = $this->validate( $this->request, $this->doctorDTO, $this->wp_error );
+//        if ( is_wp_error( $validate ) ) {
+//            return $this->add( $validate );
+//        }
+       $request_dto_mapped =  $this->doctor_request_mapper->map();
+       // $request_dto = $this->doctor_service->save( $validate );
+        return $this->add( $request_dto_mapped );
     }
 
     private function get_template_part( string $fileName, array $args = [] ): string {

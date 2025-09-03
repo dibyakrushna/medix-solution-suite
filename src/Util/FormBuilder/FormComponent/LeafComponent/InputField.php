@@ -60,6 +60,12 @@ class InputField implements FormComponentInterface, LabelableInterface {
      * @since 1.0.0
      * * */
     public string $description = '';
+    
+     /**
+     * @var string 
+     * @since 1.0.0
+     * * */
+    public string $value = '';
 
     /**
      * @var array
@@ -84,7 +90,8 @@ class InputField implements FormComponentInterface, LabelableInterface {
             "header" => "",
             "options" => [],
             "error" => false,
-            "description" => ""
+            "description" => "",
+            "value" => "",
         ];
 
         $attr = array_merge( $default_attr, $attr );
@@ -99,6 +106,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
         $this->options = $attr[ 'options' ];
         $this->error = $attr[ "error" ];
         $this->description = $attr[ 'description' ];
+        $this->value = $attr["value"];
     }
 
     public function render(): string {
@@ -119,7 +127,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
                     name="<?= esc_attr( $option_value[ "name" ] ) ?>"
                     <?= esc_attr( $extra_attr_str ?? '' ) ?> 
                     id="<?= esc_attr( $option_value[ "id" ] ) ?>" 
-                    class="<?= $option_value[ 'classes' ] ? esc_attr( implode( " ", $option_value[ 'classes' ] ) ) : "" ?>"
+                    class="<?= $option_value[ 'classes' ] ? esc_attr( sanitize_html_class(  implode( " ", $option_value[ 'classes' ] ) ) ) : "" ?>"
                     value ="<?= esc_attr( $option_value[ 'value' ] ) ?>"
                      <?php selected( $option_value['selected'], true ); ?>
                     />
@@ -140,7 +148,8 @@ class InputField implements FormComponentInterface, LabelableInterface {
                 name="<?= esc_attr( $this->name ) ?>"
                 <?= esc_attr( $extra_attr_str ?? '' ) ?> 
                 id="<?= esc_attr( $this->id ) ?>" 
-                class="<?= esc_attr( $class_attr ) ?>"
+                class="<?= esc_attr( sanitize_html_class( $class_attr ) ) ?>"
+                value="<?= esc_attr( $this->value) ?>" 
                 />
                 <?php if ( !empty( trim( $this->description ) ) ) : ?>
                 <span class="description <?= $this->error ? 'error' : "" ?>"> <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?> </span>

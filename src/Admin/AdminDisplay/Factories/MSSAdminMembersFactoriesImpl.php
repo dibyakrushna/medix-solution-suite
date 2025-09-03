@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MedixSolutionSuite\Admin\AdminDisplay\Factories;
@@ -14,6 +15,7 @@ use MedixSolutionSuite\Enums\MemberEnum;
 use MedixSolutionSuite\Service\DoctorServiceImpl;
 use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
 use WP_Error;
+use MedixSolutionSuite\Mapper\Doctor\DoctorRequestMapper;
 
 //enum MemberEnum: string {
 //
@@ -32,39 +34,43 @@ class MSSAdminMembersFactoriesImpl implements MSSAdminMembersFactory {
     //put your code here
     public function get_member_controller(): MembersController {
         $to_match_strig = $this->get_controller_from_input();
-        $query_string = sanitize_text_field(filter_input(INPUT_SERVER, "QUERY_STRING"));
-        parse_str($query_string, $result);
-        $keys = array_keys($result);
-        if (!in_array('controller', $keys)) {
+        $query_string = sanitize_text_field( filter_input( INPUT_SERVER, "QUERY_STRING" ) );
+        parse_str( $query_string, $result );
+        $keys = array_keys( $result );
+        if ( !in_array( 'controller', $keys ) ) {
             $home_url = add_query_arg(
                     array(
                         'page' => 'mss_members',
                         'controller' => 'home',
                         'action' => 'view'
                     ),
-                    admin_url('admin.php')
+                    admin_url( 'admin.php' )
             );
             echo "<script>location.href = '$home_url';</script>";
             exit;
         }
-        $return_value = match ($to_match_strig) {
+        $return_value = match ( $to_match_strig ) {
             MemberEnum::DOCTOR->value => new AdminDoctorController(
                     admin_doctor_table: new AdminDoctorTable,
                     request: new Request,
                     doctor_service: new DoctorServiceImpl,
                     doctorDTO: new DoctorRequestDTO,
-                    wp_error: new WP_Error
+                    wp_error: new WP_Error,
+                    doctor_request_mapper: new DoctorRequestMapper(
+                            doctor_request_dto: new DoctorRequestDTO,
+                            request: new Request
+                    ),
             ),
             MemberEnum::PATIENT->value => new AdmminPatientController(),
             MemberEnum::HOME->value => new AdminMemberHomeController(),
-            default => throw new \ErrorException("Custom message"),
+            default => throw new \ErrorException( "Custom message" ),
         };
 
         return $return_value;
     }
 
     private function get_controller_from_input(): ?string {
-        $controller = sanitize_text_field(filter_input(INPUT_GET, "controller", FILTER_DEFAULT));
+        $controller = sanitize_text_field( filter_input( INPUT_GET, "controller", FILTER_DEFAULT ) );
         return $controller ?: null;
     }
 }
