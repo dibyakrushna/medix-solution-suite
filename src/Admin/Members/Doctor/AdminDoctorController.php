@@ -44,18 +44,24 @@ class AdminDoctorController extends MembersController {
         return $this->get_template_part( "admin-doctor-table", [ "mss_admin_doctor_table_object" => $this->admin_doctor_table ] );
     }
 
-    public function add(  WP_Error|DoctorDTO $value = null): string {
+    public function add( WP_Error|DoctorDTO $value = null ): string {
         return $this->build_component( $value );
         //return $this->get_template_part( "admin-doctor-add-new-form", [ "form_data" => $args ] );
     }
 
     public function save(): ?string {
-//        $validate = $this->validate( $this->request, $this->doctorDTO, $this->wp_error );
-//        if ( is_wp_error( $validate ) ) {
-//            return $this->add( $validate );
-//        }
-       $request_dto_mapped =  $this->doctor_request_mapper->map();
-       // $request_dto = $this->doctor_service->save( $validate );
+        $this->validate( $this->request, $this->wp_error );
+        $dat = $this->wp_error->get_all_error_data();
+        
+        if ( is_wp_error( $this->wp_error )  && $this->wp_error->has_errors()) {
+            echo "<pre>";
+            print_r( $this->wp_error );
+            echo "</pre>";
+            return $this->add( $this->wp_error );
+        }
+        $request_dto_mapped = $this->doctor_request_mapper->map();
+        print_r( $request_dto_mapped->get_first_name() );        exit();
+        // $request_dto = $this->doctor_service->save( $validate );
         return $this->add( $request_dto_mapped );
     }
 

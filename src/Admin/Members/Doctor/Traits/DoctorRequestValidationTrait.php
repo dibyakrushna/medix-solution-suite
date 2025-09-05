@@ -7,10 +7,12 @@ namespace MedixSolutionSuite\Admin\Members\Doctor\Traits;
 use MedixSolutionSuite\Util\Request;
 use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
 use WP_Error;
+use MedixSolutionSuite\Admin\Members\Doctor\Traits\DoctorPersonalInfoValidationTrait;
 
 trait DoctorRequestValidationTrait {
+    use DoctorPersonalInfoValidationTrait;
 
-    private function validate( Request $request, DoctorRequestDTO $doctorRequstDto, WP_Error $wp_error ): DoctorRequestDTO|WP_Error {
+    private function validate( Request $request,  WP_Error $wp_error ) {
 
         if ( !$request->isPost() ) {
             $wp_error->add( "methode_error", __( "It should a post method", MSS_TEXT_DOMAIN ) );
@@ -18,8 +20,9 @@ trait DoctorRequestValidationTrait {
         if ( !check_admin_referer() ) {
             $wp_error->add( "nonce_error", __( "Nonce not valid", MSS_TEXT_DOMAIN ) );
         }
+        $this->validate_personal_info($request, $wp_error);
         /*====PERSONALINFO===*/
-        
+        /**
         //Checking first name is empty
         if ( $request->has( 'mss_admin_doctor_first_name' ) && !empty( $request->input( "mss_admin_doctor_first_name" ) ) ) {
             $first_name = $request->input( "mss_admin_doctor_first_name" );
@@ -144,7 +147,10 @@ trait DoctorRequestValidationTrait {
             $website = $request->input( "mss_admin_doctor_website" );
             $doctorRequstDto->set_website( sanitize_text_field( $website ) );
         }
+         * 
+         */
         /**======Professional Info======**/
+        /**
         //Specialization
         if ( $request->has( "mss_admin_doctor_specialization" ) && !empty( $request->input( "mss_admin_doctor_specialization" ) ) ) {
             $specialization = $request->input( "mss_admin_doctor_specialization" );
@@ -174,8 +180,9 @@ trait DoctorRequestValidationTrait {
         } else {
             $doctorRequstDto->set_medical_license( $request->file( "mss_admin_doctor_certificate" ) );
         }
-        
+        **/
         /*=====Educational and Professional Qualifications====*/
+        /**
           //Degrees
         if ( $request->has( "mss_admin_doctor_degrees" ) && !empty( $request->input( "mss_admin_doctor_degrees" ) ) ) {
             $degree = $request->input( "mss_admin_doctor_degrees" );
@@ -209,5 +216,7 @@ trait DoctorRequestValidationTrait {
         }
 
         return $doctorRequstDto;
+        **/
+        
     }
 }
