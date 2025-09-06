@@ -26,7 +26,7 @@ class DoctorRequestMapper {
      * Personal
      * * */
     public function map_personal_info(): self {
-        array_merge( $this->text_mapping, ...[
+        $this->text_mapping = array_merge( $this->text_mapping, apply_filters( "mss_admin_doctor_personal_info", [
             "mss_admin_doctor_first_name" => "set_first_name",
             "mss_admin_doctor_last_name" => "set_last_name",
             "mss_admin_doctor_gender" => "set_gender",
@@ -43,34 +43,54 @@ class DoctorRequestMapper {
             "mss_admin_doctor_postal_code" => "set_postcode",
             "mss_admin_doctor_country" => "set_country",
             "mss_admin_doctor_website" => "set_website",
-                ] );
-        array_merge( $this->email_mapping, ...[ "mss_admin_doctor_email" => "set_email" ] );
-        array_merge( $this->file_mapping, ...[ "mss_admin_doctor_license_file" => "set_license_file" ] );
+                ] ) );
+        $this->email_mapping = array_merge( $this->email_mapping, [ "mss_admin_doctor_email" => "set_email" ] );
+        $this->file_mapping = array_merge( $this->file_mapping, [ "mss_admin_doctor_profile_picture" => "set_profile_picture" ] );
+
         return $this;
     }
 
     /**
      * Professional 
      * * */
-    private function map_professional_info() {
-        $specialization = $this->request->input( "mss_admin_doctor_specialization", "" );
-        $this->doctor_request_dto->set_specialization( sanitize_text_field( $specialization ) );
+    private function map_professional_info(): self {
+        $this->text_mapping = array_merge(
+                $this->text_mapping,
+                apply_filters(
+                        "mss_admin_doctor_professional_info",
+                        [
+                            "mss_admin_doctor_specialization" => "set_specialization",
+                            "mss_admin_doctor_year_of_experience" => "set_year_of_experience",
+                            "mss_admin_doctor_medical_registartion_number" => "set_medical_registration_number",
+                            "mss_admin_doctor_consulation_fee" => "set_consultation_fees",
+                        ]
+                )
+        );
+
+        $this->file_mapping = array_merge( $this->file_mapping, [ "mss_admin_doctor_certificate" => "set_medical_license" ] );
+        return $this;
     }
 
     /**
      * get DTO 
      * * */
     public function map(): ?DoctorRequestDTO {
-       return  $this->map_personal_info()->mapp_with_text_field_sanitization()->get_dto();
+        return $this->map_personal_info()
+                        ->map_professional_info()
+                        ->mapp_with_text_field_sanitization()
+                        ->mapp_with_email_field_sanitization()
+                        ->mapp_with_file()
+                        ->get_dto();
     }
-    private function get_dto(): ?DoctorRequestDTO{
-    return this->doctor_request_dto ;
+
+    private function get_dto(): ?DoctorRequestDTO {
+        return $this->doctor_request_dto;
     }
+
     /**
      * map field sanitization 
      * * */
-    private function mapp_with_text_field_sanitization( ):self {
-        print_r($this->text_mapping);
+    private function mapp_with_text_field_sanitization(): self {
         foreach ( $this->text_mapping as $field => $setter ) {
             $value = $this->request->input( $field );
             if ( $value !== null ) {
@@ -80,7 +100,31 @@ class DoctorRequestMapper {
         }
         return $this;
     }
+
     /**
      * Map with email sanitization
-     * ***/
+     * ** */
+    private function mapp_with_email_field_sanitization(): self {
+        foreach ( $this->email_mapping as $field => $setter ) {
+            $value = $this->request->input( $field );
+            if ( $value !== null ) {
+                $sanitized_value = sanitize_email( $value );
+                $this->doctor_request_dto->$setter( $sanitized_value );
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Map with file
+     * * */
+    private function mapp_with_file(): self {
+        foreach ( $this->file_mapping as $field => $setter ) {
+            $value = $this->request->file( $field );
+            if ( $value !== null ) {
+                $this->doctor_request_dto->$setter( $value );
+            }
+        }
+        return $this;
+    }
 }
