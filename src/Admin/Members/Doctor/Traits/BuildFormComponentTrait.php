@@ -265,6 +265,8 @@ trait BuildFormComponentTrait {
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->username_input_field( $form_values ) ) ),
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->nickname_input_field( $form_values ) ) ),
             FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->display_name_input_field( $form_values ) ) ),
+            FormBuilder::get_form_component( 'input', $this->password_input_field( $form_values ) ),
+                //     FormBuilder::get_form_component( 'input', $this->build_input_attr( $this->password_input_field( $form_values ) ) ),
         ];
         return apply_filters( "mss_admin_doctor_system_access_permission_form_componet", $componets, $form_values );
     }
