@@ -60,8 +60,11 @@ class AdminDisplayController {
         try {
             $display = $this->adminMembersContext->get_context();
             $template_view = sanitize_text_field( filter_input( INPUT_GET, "action" ) );
+            $parameters = filter_input( INPUT_GET, "parameter", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ) ;
+            $parameters = $parameters ?? [];
+            
             if ( method_exists( $display, $template_view ) ) {
-                $view = call_user_func( [ $display, $template_view ] );
+                $view = call_user_func_array( [ $display, $template_view ], [ ...$parameters ] );
                 $this->load_template_part( "admin-members-display-tmpl", [ "display" => $view ] );
             } else {
                 throw new RuntimeException( __( "No method found", MSS_TEXT_DOMAIN ), 404 );
@@ -97,7 +100,7 @@ class AdminDisplayController {
                     ) );
 
             // Create the main "Doctor" menu item
-            $doctorUrl = add_query_arg( array( 'page' => 'mss_members', 'controller' => 'doctor', 'action' => 'view' ), $baseUrl );
+            $doctorUrl = add_query_arg( array( 'page' => 'mss_members', 'controller' => 'doctor', 'action' => 'list' ), $baseUrl );
             $doctorItemId = wp_update_nav_menu_item( $menuId, 0, array(
                 'menu-item-title' => __( 'Doctor', MSS_TEXT_DOMAIN ),
                 'menu-item-classes' => 'doctor',
@@ -114,9 +117,9 @@ class AdminDisplayController {
                 'menu-item-parent-id' => $doctorItemId
             ) );
 
-            $viewDoctorUrl = add_query_arg( array( 'page' => 'mss_members', 'controller' => 'doctor', 'action' => 'view' ), $baseUrl );
+            $viewDoctorUrl = add_query_arg( array( 'page' => 'mss_members', 'controller' => 'doctor', 'action' => 'list' ), $baseUrl );
             wp_update_nav_menu_item( $menuId, 0, array(
-                'menu-item-title' => __( 'View Doctor', MSS_TEXT_DOMAIN ),
+                'menu-item-title' => __( 'List Doctor', MSS_TEXT_DOMAIN ),
                 'menu-item-url' => $viewDoctorUrl,
                 'menu-item-status' => 'publish',
                 'menu-item-parent-id' => $doctorItemId
@@ -182,7 +185,7 @@ class AdminDisplayController {
             } else {
                 throw new \ErrorException( __( "No template found", MSS_TEXT_DOMAIN ) );
             }
-            echo '</div>'; 
+            echo '</div>';
         } catch ( Throwable $exc ) {
             ?>
             <div class="wrap"> <?= $exc->getMessage() ?>      </div>

@@ -20,6 +20,7 @@ class DoctorRequestDTO extends DoctorDTO {
      * @author dibya <dibyakrishna@gmail.com>
      * * */
     private string $password = "";
+    
 
     /**
      * @var array Profile Image

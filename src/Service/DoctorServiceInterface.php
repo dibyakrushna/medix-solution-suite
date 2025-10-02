@@ -14,7 +14,7 @@ use WP_Error;
  * @author dibya
  */
 interface DoctorServiceInterface {
-    public  function save(DoctorRequestDTO $doctorRequestDto):WP_Error| DoctorResponseDTO;
+    public  function save(DoctorRequestDTO $doctorRequestDto, WP_Error $wp_error ):WP_Error| DoctorResponseDTO;
     public function  get_all_doctors();
     public function get_by_id();
 }

@@ -26,7 +26,7 @@ class DoctorRequestMapper {
      * Personal
      * * */
     private function map_personal_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters( "mss_admin_doctor_personal_info",
                         [
@@ -49,8 +49,8 @@ class DoctorRequestMapper {
                         ]
                 )
         );
-        $this->email_mapping[] = array_merge( $this->email_mapping, [ "mss_admin_doctor_email" => "set_email" ] );
-        $this->file_mapping[] = array_merge( $this->file_mapping, [ "mss_admin_doctor_profile_picture" => "set_profile_picture" ] );
+        $this->email_mapping = array_merge( $this->email_mapping, [ "mss_admin_doctor_email" => "set_email" ] );
+        $this->file_mapping = array_merge( $this->file_mapping, [ "mss_admin_doctor_profile_picture" => "set_profile_picture" ] );
 
         return $this;
     }
@@ -59,7 +59,7 @@ class DoctorRequestMapper {
      * Professional 
      * * */
     private function map_professional_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_professional_info",
@@ -72,7 +72,7 @@ class DoctorRequestMapper {
                 )
         );
 
-        $this->file_mapping[] = array_merge( $this->file_mapping, [ "mss_admin_doctor_certificate" => "set_medical_license" ] );
+        $this->file_mapping = array_merge( $this->file_mapping, [ "mss_admin_doctor_certificate" => "set_medical_license" ] );
         return $this;
     }
 
@@ -82,7 +82,7 @@ class DoctorRequestMapper {
      * @since 1.0.0
      * * */
     private function map_educational_professional_qualification(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_educational_professional_info",
@@ -95,7 +95,7 @@ class DoctorRequestMapper {
                 )
         );
 
-        $this->file_mapping[] = array_merge( $this->file_mapping, [ "mss_admin_doctor_certifications_accreditations" => "set_certifications" ] );
+        $this->file_mapping = array_merge( $this->file_mapping, [ "mss_admin_doctor_certifications_accreditations" => "set_certifications" ] );
         return $this;
     }
 
@@ -105,7 +105,7 @@ class DoctorRequestMapper {
      * @since 1.0.0
      * * */
     private function map_availability_scheduling_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_availability_schedule_info",
@@ -125,7 +125,7 @@ class DoctorRequestMapper {
      * @since 1.0.0
      * * */
     private function map_employment_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_employment_info",
@@ -148,7 +148,7 @@ class DoctorRequestMapper {
      * @since 1.0.0
      * * */
     private function map_permissions_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_emergency_contact_info",
@@ -156,19 +156,21 @@ class DoctorRequestMapper {
                             "mss_admin_doctor_username" => "set_emergency_contact_name",
                             "mss_admin_doctor_nickname" => "set_emergency_contact_relationship",
                             "mss_admin_doctor_display_name" => "set_emergency_contact_phone",
+                            "mss_admin_doctor_password_button" => "set_password"
                         ]
                 )
         );
 
         return $this;
     }
+
     /**
      * Permissions Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_additional_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_emergency_contact_info",
@@ -182,13 +184,14 @@ class DoctorRequestMapper {
 
         return $this;
     }
-     /**
+
+    /**
      * Employment Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_emergency_contact_info(): self {
-        $this->text_mapping[] = array_merge(
+        $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_emergency_contact_info",
@@ -202,6 +205,7 @@ class DoctorRequestMapper {
 
         return $this;
     }
+
     /**
      * Map
      * @author dibya<dibyakrishna@gmail.com>
@@ -214,6 +218,8 @@ class DoctorRequestMapper {
                         ->map_availability_scheduling_info()
                         ->map_employment_info()
                         ->map_emergency_contact_info()
+                        ->map_permissions_info()
+                        ->map_additional_info()
                         ->mapp_with_text_field_sanitization()
                         ->mapp_with_email_field_sanitization()
                         ->mapp_with_file()
@@ -233,9 +239,9 @@ class DoctorRequestMapper {
     private function mapp_with_text_field_sanitization(): self {
         foreach ( $this->text_mapping as $field => $setter ) {
             $value = $this->request->input( $field );
-            if ( $value !== null ) {
+            if ( $value !== null && !is_array( $value ) ) {
                 $sanitized_value = sanitize_text_field( $value );
-                $this->doctor_request_dto->$setter( $sanitized_value );
+                call_user_func( [ $this->doctor_request_dto, $setter ], $sanitized_value );
             }
         }
         return $this;
@@ -247,9 +253,9 @@ class DoctorRequestMapper {
     private function mapp_with_email_field_sanitization(): self {
         foreach ( $this->email_mapping as $field => $setter ) {
             $value = $this->request->input( $field );
-            if ( $value !== null ) {
+            if ( $value !== null && !is_array( $value ) ) {
                 $sanitized_value = sanitize_email( $value );
-                $this->doctor_request_dto->$setter( $sanitized_value );
+                call_user_func( [ $this->doctor_request_dto, $setter ], $sanitized_value );
             }
         }
         return $this;
@@ -261,8 +267,8 @@ class DoctorRequestMapper {
     private function mapp_with_file(): self {
         foreach ( $this->file_mapping as $field => $setter ) {
             $value = $this->request->file( $field );
-            if ( $value !== null ) {
-                $this->doctor_request_dto->$setter( $value );
+            if ( $value !== null && is_array( $value ) ) {
+                call_user_func( [ $this->doctor_request_dto, $setter ], $value );
             }
         }
         return $this;

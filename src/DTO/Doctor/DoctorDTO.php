@@ -399,7 +399,7 @@ abstract class DoctorDTO {
      * @author dibya <dibyakrishna@gmail.com>
      * * */
     public function get_id(): ?int {
-        $this->ID;
+        $this->ID ;
     }
 
     /**

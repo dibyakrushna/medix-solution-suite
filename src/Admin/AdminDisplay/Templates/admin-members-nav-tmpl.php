@@ -1,6 +1,4 @@
 <?php
-
-use Walker_Nav_Menu;
 ?>
 <div class="wrap">
     <?php

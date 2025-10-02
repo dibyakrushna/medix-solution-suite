@@ -110,7 +110,7 @@ if ( !trait_exists( "SystemAccessPermissionFieldTrait" ) ) {
                 "header" => esc_html( "Password", MSS_TEXT_DOMAIN ),
                 "id" => "mss_admin_doctor_password_button",
                 "name" => "mss_admin_doctor_password_button",
-                "type" => "button"
+                "type" => "password"
             ];
 
 //            if ( !is_null( $form_values ) && is_wp_error( $form_values ) && !empty( trim( $form_values->get_error_message( "mss_admin_doctor_dob" ) ) ) ) {
