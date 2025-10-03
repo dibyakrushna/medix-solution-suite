@@ -16,5 +16,5 @@ use WP_Error;
 interface DoctorServiceInterface {
     public  function save(DoctorRequestDTO $doctorRequestDto, WP_Error $wp_error ):WP_Error| DoctorResponseDTO;
     public function  get_all_doctors();
-    public function get_by_id();
+    public function get_by_id( int $id);
 }

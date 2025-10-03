@@ -4,6 +4,8 @@ namespace MedixSolutionSuite\Repository\Doctor;
 
 use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
 use WP_Error;
+use WP_User;
+use stdClass;
 
 /**
  * Description of DoctorRepository
@@ -11,6 +13,15 @@ use WP_Error;
  * @author dibya
  */
 class DoctorRepository {
+    /**
+     * @var user data
+     *  @author dibya <dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * **/
+    private WP_User $wp_user ;
+    public function __construct( WP_User $doctor_as_user) {
+        $this->wp_user = $doctor_as_user;
+    }
 
     /**
      * Creating doctor or editing
@@ -48,5 +59,15 @@ class DoctorRepository {
             "role" => "mss_member_doctor",
         ];
         $user = wp_insert_user($userdata) ;
+        return $user;
+    }
+    /**
+     * Getting User
+     * @author dibya <dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * ** */
+    public function get_user_data_by_id(int $id):?stdClass{
+        $doctor_data = $this->wp_user->get_data_by("id", $id);
+        return $doctor_data;
     }
 }

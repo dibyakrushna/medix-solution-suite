@@ -151,11 +151,11 @@ class DoctorRequestMapper {
         $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
-                        "mss_admin_doctor_emergency_contact_info",
+                        "mss_admin_doctor_peemission_info",
                         [
-                            "mss_admin_doctor_username" => "set_emergency_contact_name",
-                            "mss_admin_doctor_nickname" => "set_emergency_contact_relationship",
-                            "mss_admin_doctor_display_name" => "set_emergency_contact_phone",
+                            "mss_admin_doctor_username" => "set_username",
+                            "mss_admin_doctor_nickname" => "set_nickname",
+                            "mss_admin_doctor_display_name" => "set_display_name",
                             "mss_admin_doctor_password_button" => "set_password"
                         ]
                 )
@@ -173,11 +173,12 @@ class DoctorRequestMapper {
         $this->text_mapping = array_merge(
                 $this->text_mapping,
                 apply_filters(
-                        "mss_admin_doctor_emergency_contact_info",
+                        "mss_admin_doctor_additional_info",
                         [
-                            "mss_admin_doctor_username" => "set_emergency_contact_name",
-                            "mss_admin_doctor_nickname" => "set_emergency_contact_relationship",
-                            "mss_admin_doctor_display_name" => "set_emergency_contact_phone",
+                            "mss_admin_doctor_language_spoken" => "set_languages_spoken",
+                            "mss_admin_doctor_short_biography" => "set_short_biography",
+                            "mss_admin_doctor_social_media_profile_link" => "set_social_media_profile",
+                            "mss_admin_doctor_personal_statement" => "set_personal_statement"
                         ]
                 )
         );

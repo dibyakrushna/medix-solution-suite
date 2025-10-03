@@ -56,6 +56,7 @@ abstract class DoctorDTO {
     private string $short_biography = '';
     private string $social_media_profile = '';
     private string $personal_statement = '';
+    
 
     /**
      * @var int ID
@@ -399,7 +400,7 @@ abstract class DoctorDTO {
      * @author dibya <dibyakrishna@gmail.com>
      * * */
     public function get_id(): ?int {
-        $this->ID ;
+        return $this->ID ;
     }
 
     /**
@@ -408,7 +409,7 @@ abstract class DoctorDTO {
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * * */
-    public function set_id( int $id ) {
+    public function set_id( int $id = 0 ) {
         $this->ID = $id;
     }
 }

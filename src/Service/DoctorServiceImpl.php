@@ -40,11 +40,13 @@ class DoctorServiceImpl implements DoctorServiceInterface {
         
     }
 
-    public function get_by_id() {
-        
+    public function get_by_id( int $id) {
+       $user =  $this->repository->get_user_data_by_id($id);
+       print_r($user);
     }
 
     public function save( DoctorRequestDTO $doctorRequestDto, WP_Error $wp_error ):WP_Error| DoctorResponseDTO {
+        
         $user = $this->repository->create_or_edit_doctor( $doctorRequestDto, $wp_error);
         print_r($user);
     }
