@@ -1,5 +1,7 @@
 <?php
+
 declare (strict_types=1);
+
 namespace MedixSolutionSuite\Repository\Doctor;
 
 use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
@@ -13,13 +15,15 @@ use stdClass;
  * @author dibya
  */
 class DoctorRepository {
+
     /**
      * @var user data
      *  @author dibya <dibyakrishna@gmail.com>
      * @since 1.0.0
-     * **/
-    private WP_User $wp_user ;
-    public function __construct( WP_User $doctor_as_user) {
+     * * */
+    private WP_User $wp_user;
+
+    public function __construct( WP_User $doctor_as_user ) {
         $this->wp_user = $doctor_as_user;
     }
 
@@ -33,16 +37,16 @@ class DoctorRepository {
         $email = $doctorRequestDto->get_email();
         $id = $doctorRequestDto->get_id();
         $password = $doctorRequestDto->get_password();
-        
+
         $is_user_exist = username_exists( $username );
         $is_email_exist = email_exists( $email );
-        if ( is_int($is_user_exist) && is_int( $id ) &&  $id !== $is_user_exist) {
+        if ( is_int( $is_user_exist ) && is_int( $id ) && $id !== $is_user_exist ) {
             $wp_error->add( "mss_doctor_exist", __( "Doctor is exist", MSS_TEXT_DOMAIN ), $is_user_exist );
         }
-        if(  is_int($is_email_exist) && is_int( $id ) &&  $id !== $is_email_exist ){
+        if ( is_int( $is_email_exist ) && is_int( $id ) && $id !== $is_email_exist ) {
             $wp_error->add( "mss_email_exist", __( "Doctor email is exist", MSS_TEXT_DOMAIN ), $is_email_exist );
         }
-        if( $wp_error->has_errors() ){
+        if ( $wp_error->has_errors() ) {
             return $wp_error;
         }
         $userdata = [
@@ -58,16 +62,22 @@ class DoctorRepository {
             "description" => $doctorRequestDto->get_personal_statement(),
             "role" => "mss_member_doctor",
         ];
-        $user = wp_insert_user($userdata) ;
+        $user = wp_insert_user( $userdata );
         return $user;
     }
+
     /**
      * Getting User
      * @author dibya <dibyakrishna@gmail.com>
      * @since 1.0.0
      * ** */
-    public function get_user_data_by_id(int $id):?stdClass{
-        $doctor_data = $this->wp_user->get_data_by("id", $id);
-        return $doctor_data;
+    public function get_user_data_by_id( int $id ): ?WP_User {
+        static $data;
+        if ( !$data ) {
+            $data = new stdClass();
+        }
+        $data->ID = $id;
+        $this->wp_user->init( $data );
+        return $this->wp_user; 
     }
 }

@@ -63,8 +63,9 @@ class AdminDoctorController extends MembersController {
      * @author Dibya <dibyakrishna@gmail.com>
      * @param int $id Id of Doctor
      * * */
-    public function edit( int $id ) {
-        $this->doctor_service->get_by_id( $id);
+    public function edit( int $id ):?string {
+        $response = $this->doctor_service->get_by_id( $id);
         
+        return $this->add( $response );
     }
 }

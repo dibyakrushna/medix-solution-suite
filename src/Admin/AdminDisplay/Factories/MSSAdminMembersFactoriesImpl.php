@@ -18,6 +18,7 @@ use WP_Error;
 use MedixSolutionSuite\Mapper\Doctor\DoctorRequestMapper;
 use MedixSolutionSuite\DTO\Doctor\DoctorResponseDTO;
 use MedixSolutionSuite\Repository\Doctor\DoctorRepository;
+use MedixSolutionSuite\Mapper\Doctor\DoctorDBToDTOMapper;
 use WP_User;
 
 //enum MemberEnum: string {
@@ -58,6 +59,7 @@ class MSSAdminMembersFactoriesImpl implements MSSAdminMembersFactory {
                     request: new Request,
                     doctor_service: new DoctorServiceImpl( 
                             doctor_response_dto: new DoctorResponseDTO,
+                            doctor_db_to_dto_mapper  :  new DoctorDBToDTOMapper,
                             doctor_repository : new DoctorRepository(
                                     doctor_as_user : new WP_User
                             )
