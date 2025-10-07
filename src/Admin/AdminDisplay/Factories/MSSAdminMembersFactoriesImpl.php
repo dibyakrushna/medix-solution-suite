@@ -19,6 +19,7 @@ use MedixSolutionSuite\Mapper\Doctor\DoctorRequestMapper;
 use MedixSolutionSuite\DTO\Doctor\DoctorResponseDTO;
 use MedixSolutionSuite\Repository\Doctor\DoctorRepository;
 use MedixSolutionSuite\Mapper\Doctor\DoctorDBToDTOMapper;
+use MedixSolutionSuite\Mapper\Doctor\DoctorDTOToDBMapper;
 use WP_User;
 
 //enum MemberEnum: string {
@@ -57,13 +58,14 @@ class MSSAdminMembersFactoriesImpl implements MSSAdminMembersFactory {
             MemberEnum::DOCTOR->value => new AdminDoctorController(
                     admin_doctor_table: new AdminDoctorTable,
                     request: new Request,
-                    doctor_service: new DoctorServiceImpl( 
-                            doctor_response_dto: new DoctorResponseDTO,
-                            doctor_db_to_dto_mapper  :  new DoctorDBToDTOMapper,
-                            doctor_repository : new DoctorRepository(
-                                    doctor_as_user : new WP_User
-                            )
-                        ),
+                    doctor_service: new DoctorServiceImpl(
+                            doctor_db_to_dto_mapper: new DoctorDBToDTOMapper(
+                                    doctor_response_dto: new DoctorResponseDTO,
+                            ),
+                            doctor_repository: new DoctorRepository,
+                            doctor_as_user: new WP_User,
+                            dto_to_db_mapper : new DoctorDTOToDBMapper
+                    ),
                     wp_error: new WP_Error,
                     doctor_request_mapper: new DoctorRequestMapper(
                             doctor_request_dto: new DoctorRequestDTO,

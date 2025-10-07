@@ -15,6 +15,12 @@ use MedixSolutionSuite\DTO\Doctor\DoctorResponseDTO;
 class DoctorDBToDTOMapper {
 
     private array $mapper = [];
+    private WP_User $doctor;
+
+    public function __construct( private DoctorResponseDTO $doctor_response_dto
+    ) {
+        
+    }
 
     /**
      * Db to DTO mapper
@@ -24,21 +30,24 @@ class DoctorDBToDTOMapper {
      * @since 1.0.0
      * @author dibya<dibyakrishna@gmail.com>
      * * */
-    public function init_db_to_dto_mappinr( WP_User $doctor, DoctorResponseDTO $dto_response ): DoctorResponseDTO {
-        $this->map_personal_info( $doctor )
-                ->map_professional_info( $doctor )
-                ->set_dto( $dto_response );
-        return $dto_response;
+    public function init_db_to_dto_mappinr( WP_User $doctor ): DoctorResponseDTO {
+        $this->doctor = $doctor;
+        $this->map_personal_info()
+                ->map_professional_info()
+                ->set_dto();
+        return $this->doctor_response_dto;
     }
 
     /**
      * map_personal_info
      * 
      * * */
-    private function map_personal_info( WP_User $doctor ): self {
+    private function map_personal_info(): self {
         $this->mapper = array_merge( $this->mapper,
                 [
-                    "set_first_name" => $doctor->user_firstname,
+                    "set_first_name" => $this->doctor->user_firstname,
+                    "set_last_name" => $this->doctor->last_name,
+                    "set_email" => $this->doctor->user_email
                 ]
         );
         return $this;
@@ -47,10 +56,10 @@ class DoctorDBToDTOMapper {
     /**
      * map_professional_info
      * ** */
-    private function map_professional_info( WP_User $doctor ): self {
+    private function map_professional_info(): self {
         $this->mapper = array_merge( $this->mapper,
                 [
-                    "set_specialization" => $doctor->last_name
+                    "set_specialization" => $this->doctor->last_name
                 ]
         );
 
@@ -61,10 +70,10 @@ class DoctorDBToDTOMapper {
      * Set DTO 
      * ** */
 
-    private function set_dto( DoctorResponseDTO $dto_response ) {
+    private function set_dto() {
         foreach ( $this->mapper as $setter => $set_value ) {
             if ( $set_value !== null && !is_array( $set_value ) ) {
-                call_user_func( [ $dto_response, $setter ], $set_value );
+                call_user_func( [ $this->doctor_response_dto, $setter ], $set_value );
             }
         }
     }
