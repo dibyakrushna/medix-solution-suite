@@ -98,9 +98,8 @@ trait ProfessionalFieldTrait {
             $result[ 'error' ] = true;
             $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_specialization" );
         }
-
-        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_last_name() ) ) ) {
-            $result[ 'value' ] = $form_values->get_specialization();
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_specialization() ) ) ) {
+            $result[ 'selected' ] = $form_values->get_specialization();
         }
 
         return $result;
@@ -124,8 +123,8 @@ trait ProfessionalFieldTrait {
             "label" => esc_html( "Last name of doctor", MSS_TEXT_DOMAIN ),
         ];
 
-        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_last_name() ) ) ) {
-            $result[ 'value' ] = $form_values->get_last_name();
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_year_of_experience() ) ) ) {
+            $result[ 'value' ] = $form_values->get_year_of_experience();
         }
 
         return $result;
@@ -149,8 +148,8 @@ trait ProfessionalFieldTrait {
             "description" => esc_html( "Specific to the country, e.g., NMC or Medical Council number", MSS_TEXT_DOMAIN )
         ];
 
-        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_last_name() ) ) ) {
-            $result[ 'value' ] = $form_values->get_last_name();
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_medical_registration_number() ) ) ) {
+            $result[ 'value' ] = $form_values->get_medical_registration_number();
         }
 
         return $result;
@@ -173,8 +172,8 @@ trait ProfessionalFieldTrait {
             "header" => esc_html( "Consultation Fees", MSS_TEXT_DOMAIN ),
         ];
 
-        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_last_name() ) ) ) {
-            $result[ 'value' ] = $form_values->get_last_name();
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_consultation_fees() ) ) ) {
+            $result[ 'value' ] = $form_values->get_consultation_fees();
         }
 
         return $result;

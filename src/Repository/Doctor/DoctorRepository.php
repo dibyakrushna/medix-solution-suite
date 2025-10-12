@@ -52,7 +52,6 @@ class DoctorRepository {
 //            "description" => $doctorRequestDto->get_personal_statement(),
 //            "role" => "mss_member_doctor",
 //        ];
-        //print_r($doctor);
         $user = wp_insert_user( $doctor );
         return $user;
     }

@@ -47,9 +47,9 @@ if ( !trait_exists( "SystemAccessPermissionFieldTrait" ) ) {
                 $result[ 'value' ] = $form_values->get_username();
             }
             
-            if(!is_null( $form_values ) && $form_values instanceof DoctorDTO &&  $form_values->get_id() > 0 ){
-                $result["extra_attr"] = ["disabled" => true ];
-            }
+//            if(!is_null( $form_values ) && $form_values instanceof DoctorDTO &&  $form_values->get_id() > 0 ){
+//                $result["extra_attr"] = ["disabled" => true ];
+//            }
             return $result;
         }
         

@@ -60,8 +60,8 @@ class InputField implements FormComponentInterface, LabelableInterface {
      * @since 1.0.0
      * * */
     public string $description = '';
-    
-     /**
+
+    /**
      * @var string 
      * @since 1.0.0
      * * */
@@ -106,14 +106,14 @@ class InputField implements FormComponentInterface, LabelableInterface {
         $this->options = $attr[ 'options' ];
         $this->error = $attr[ "error" ];
         $this->description = $attr[ 'description' ];
-        $this->value = $attr["value"];
+        $this->value = $attr[ "value" ];
     }
 
     public function render(): string {
         $class_attr = implode( " ", $this->classes );
         $extra_attr_str = null;
         if ( is_array( $this->extra_attr ) ) {
-              foreach ( $this->extra_attr as $key => $value ) {
+            foreach ( $this->extra_attr as $key => $value ) {
                 $extra_attr_str .= sprintf( ' %s=%s', esc_attr( $key ), esc_attr( $value ) );
             }
         }
@@ -122,14 +122,15 @@ class InputField implements FormComponentInterface, LabelableInterface {
         ?>
         <?php if ( "radio" === $this->type || "checkbox" === $this->type ): ?>
             <?php foreach ( $this->options as $option_key => $option_value ) : ?>
+                
                 <input 
                     type="<?= esc_attr( $this->type ) ?>" 
                     name="<?= esc_attr( $option_value[ "name" ] ) ?>"
                     <?= esc_attr( $extra_attr_str ?? '' ) ?> 
                     id="<?= esc_attr( $option_value[ "id" ] ) ?>" 
-                    class="<?= $option_value[ 'classes' ] ? esc_attr( sanitize_html_class(  implode( " ", $option_value[ 'classes' ] ) ) ) : "" ?>"
+                    class="<?= $option_value[ 'classes' ] ? esc_attr( sanitize_html_class( implode( " ", $option_value[ 'classes' ] ) ) ) : "" ?>"
                     value ="<?= esc_attr( $option_value[ 'value' ] ) ?>"
-                     <?php selected( $option_value['selected'], true ); ?>
+                    <?php checked( $option_value[ 'selected' ], $option_value[ 'value' ] ); ?>
                     />
                 <label for="<?= esc_attr( $option_value[ "id" ] ) ?>">                   
                     <?php esc_html_e( $option_value[ 'label' ], MSS_TEXT_DOMAIN ) ?>
@@ -149,7 +150,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
                 <?= esc_attr( $extra_attr_str ?? '' ) ?> 
                 id="<?= esc_attr( $this->id ) ?>" 
                 class="<?= esc_attr( sanitize_html_class( $class_attr ) ) ?>"
-                value="<?= esc_attr( $this->value) ?>" 
+                value="<?= esc_attr( $this->value ) ?>" 
                 />
                 <?php if ( !empty( trim( $this->description ) ) ) : ?>
                 <span class="description <?= $this->error ? 'error' : "" ?>"> <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?> </span>

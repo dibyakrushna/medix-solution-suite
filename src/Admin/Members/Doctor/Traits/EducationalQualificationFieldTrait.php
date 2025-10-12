@@ -33,9 +33,9 @@ if ( !trait_exists( "EducationalQualificationFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_degrees() ) ) ) {
+                $result[ 'value' ] = $form_values->get_degrees();
+            }
 
             return $result;
         }
@@ -62,9 +62,9 @@ if ( !trait_exists( "EducationalQualificationFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_college_university() ) ) ) {
+                $result[ 'value' ] = $form_values->get_college_university();
+            }
 
             return $result;
         }
@@ -90,9 +90,9 @@ if ( !trait_exists( "EducationalQualificationFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_year_of_graduation() ) ) ) {
+                $result[ 'value' ] = $form_values->get_year_of_graduation();
+            }
 
             return $result;
         }
@@ -119,9 +119,9 @@ if ( !trait_exists( "EducationalQualificationFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_affiliations() ) ) ) {
+                $result[ 'value' ] = $form_values->get_affiliations();
+            }
 
             return $result;
         }

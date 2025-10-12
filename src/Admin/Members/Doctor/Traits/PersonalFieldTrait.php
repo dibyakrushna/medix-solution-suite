@@ -61,7 +61,7 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-  /**
+    /**
      * Adding gender
      * 
      * @param WP_Error | DoctorDTO $form_values
@@ -81,7 +81,7 @@ trait PersonalFieldTrait {
                     "id" => "mss_admin_doctor_gender_female",
                     "name" => "mss_admin_doctor_gender",
                     "classes" => [ "regular-text" ],
-                    "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::FEMALE->value,
+                    "selected" => (!is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::FEMALE->value) ? GenderEnum::FEMALE->value : "",
                 ],
                 [
                     "value" => esc_html( GenderEnum::MALE->value ),
@@ -89,7 +89,7 @@ trait PersonalFieldTrait {
                     "id" => "mss_admin_doctor_gender_male",
                     "name" => "mss_admin_doctor_gender",
                     "classes" => [ "regular-text" ],
-                    "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::MALE->value,
+                    "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::MALE->value ? GenderEnum::MALE->value : "",
                 ],
                 [
                     "value" => esc_html( GenderEnum::OTHER->value ),
@@ -97,7 +97,7 @@ trait PersonalFieldTrait {
                     "id" => "mss_admin_doctor_gender_other",
                     "name" => "mss_admin_doctor_gender",
                     "classes" => [ "regular-text", "other" ],
-                    "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::OTHER->value,
+                    "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::OTHER->value ? GenderEnum::OTHER->value : "",
                 ]
             ]
         ];
@@ -109,7 +109,7 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-   /**
+    /**
      * Adding DOB
      * 
      * @param WP_Error | DoctorDTO $form_values
@@ -167,7 +167,7 @@ trait PersonalFieldTrait {
         return $result;
     }
 
-   /**
+    /**
      * Adding email
      * 
      * @param WP_Error | DoctorDTO $form_values
@@ -192,15 +192,11 @@ trait PersonalFieldTrait {
         if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_email() ) ) ) {
             $result[ 'value' ] = $form_values->get_email();
         }
-        
+
         return $result;
     }
 
-   
-
-   
-
-   /**
+    /**
      * Adding Website url
      * 
      * @param WP_Error | DoctorDTO $form_values
@@ -228,6 +224,7 @@ trait PersonalFieldTrait {
         }
         return $result;
     }
+
     /**
      * Adding profile picture
      * 
@@ -238,187 +235,211 @@ trait PersonalFieldTrait {
      * @access private
      */
     private function profile_picture_input_field( WP_Error|DoctorDTO $form_values = null ): ?array {
-         $result = [
+        $result = [
             "type" => "file",
             "header" => esc_html( "Profile Picture", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Profile Picture", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_profile_picture",
             "name" => "mss_admin_doctor_profile_picture",
         ];
+
         return $result;
-        
     }
+
     /**
      * Adding Address House Number
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function house_number(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function house_number( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "House Number", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "House Number", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_house_number",
             "name" => "mss_admin_doctor_house_number",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_house_number() ) ) ) {
+            $result[ 'value' ] = $form_values->get_house_number();
+        }
         return $result;
-        
     }
-    
+
     /**
      * Adding Street Name
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function street_name(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function street_name( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "Street Name", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Street Name", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_street_name",
             "name" => "mss_admin_doctor_street_name",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_street_name() ) ) ) {
+            $result[ 'value' ] = $form_values->get_street_name();
+        }
         return $result;
-        
     }
-    
+
     /**
      * Adding Landmark
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function landmark(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function landmark( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "Landmark", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Landmark", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_landmark",
             "name" => "mss_admin_doctor_landmark",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_landmark() ) ) ) {
+            $result[ 'value' ] = $form_values->get_landmark();
+        }
         return $result;
-        
     }
-     /**
+
+    /**
      * Adding Address Line 1
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function address_line_1(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function address_line_1( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "Address Line 1", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Address Line 1", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_address_line_1",
             "name" => "mss_admin_doctor_address_line_1",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_address_line1() ) ) ) {
+            $result[ 'value' ] = $form_values->get_address_line1();
+        }
         return $result;
-        
     }
-     /**
+
+    /**
      * Adding Address Line 2
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function address_line_2(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function address_line_2( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "Address Line 2", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Address Line 2", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_address_line_2",
             "name" => "mss_admin_doctor_address_line_2",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_address_line2() ) ) ) {
+            $result[ 'value' ] = $form_values->get_address_line2();
+        }
         return $result;
-        
     }
-     /**
+
+    /**
      * Adding Address City
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function city(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function city( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "City", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "City", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_city",
             "name" => "mss_admin_doctor_city",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_city() ) ) ) {
+            $result[ 'value' ] = $form_values->get_city();
+        }
         return $result;
-        
     }
+
     /**
      * Adding Address State
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function state(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function state( WP_Error|DoctorDTO $form_values = null ): ?array {
+        $result = [
             "type" => "text",
             "header" => esc_html( "State", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "State", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_state",
             "name" => "mss_admin_doctor_state",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_state() ) ) ) {
+            $result[ 'value' ] = $form_values->get_state();
+        }
         return $result;
-        
     }
-     /**
+
+    /**
      * Adding Address Postal Code
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function postal_code(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function postal_code( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "Postcode / ZIP", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Postcode / ZIP", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_postal_code",
             "name" => "mss_admin_doctor_postal_code",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_postcode() ) ) ) {
+            $result[ 'value' ] = $form_values->get_postcode();
+        }
         return $result;
-        
     }
-     /**
+
+    /**
      * Adding Address Country
      * @return array $result
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * @access private
-     * **/
-    private function country(  WP_Error|DoctorDTO $form_values = null ):?array{
-        
-         $result = [
+     * * */
+    private function country( WP_Error|DoctorDTO $form_values = null ): ?array {
+
+        $result = [
             "type" => "text",
             "header" => esc_html( "Country", MSS_TEXT_DOMAIN ),
             "label" => esc_html( "Country", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_country",
             "name" => "mss_admin_doctor_country",
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_country() ) ) ) {
+            $result[ 'value' ] = $form_values->get_country();
+        }
         return $result;
-        
     }
 }

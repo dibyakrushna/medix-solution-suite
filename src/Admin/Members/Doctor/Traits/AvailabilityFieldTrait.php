@@ -72,7 +72,7 @@ if ( !trait_exists( "AvailabilityFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_consultation_type_in_person",
                         "name" => "mss_admin_doctor_consultation_type",
                         "classes" => [ "regular-text", "full_time" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::FEMALE->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_consultation_type() ) ) && $form_values->get_consultation_type() === ConsoltationTypeEnum::INPERSON->value ,
                     ],
                     [
                         "value" => esc_html( ConsoltationTypeEnum::ONLINE->value ),
@@ -80,7 +80,7 @@ if ( !trait_exists( "AvailabilityFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_online",
                         "name" => "mss_admin_doctor_consultation_type",
                         "classes" => [ "regular-text", "part_time" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::MALE->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_consultation_type() ) ) && $form_values->get_consultation_type() === ConsoltationTypeEnum::ONLINE->value ,
                     ],
                     
                 ]

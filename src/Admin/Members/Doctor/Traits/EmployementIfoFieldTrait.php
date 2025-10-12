@@ -32,7 +32,7 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_full_time",
                         "name" => "mss_admin_doctor_employment_type",
                         "classes" => [ "regular-text", "full_time" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::FEMALE->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::FULLTIME->value,
                     ],
                     [
                         "value" => esc_html( EmploymentTypeEnum::PARTTIME->value ),
@@ -40,7 +40,7 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_part_time",
                         "name" => "mss_admin_doctor_employment_type",
                         "classes" => [ "regular-text", "part_time" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::MALE->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::PARTTIME->value,
                     ],
                     [
                         "value" => esc_html( EmploymentTypeEnum::CONTRACT->value ),
@@ -48,7 +48,7 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_contract",
                         "name" => "mss_admin_doctor_employment_type",
                         "classes" => [ "regular-text", "contract" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_gender() ) ) && $form_values->get_gender() === GenderEnum::OTHER->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::CONTRACT->value,
                     ]
                 ]
             ];

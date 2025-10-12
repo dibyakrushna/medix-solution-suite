@@ -131,7 +131,8 @@ class SelectField implements FormComponentInterface, LabelableInterface {
                         <?php if ( !empty( $label ) && !empty( $options ) ) : ?>
                         <optgroup label="<?= esc_attr__( $label, MSS_TEXT_DOMAIN ) ?>">
                                 <?php foreach ( $options as $optgrp_option_key => $optgrp_option_value ) : ?>
-                                <option value="<?= esc_attr( $optgrp_option_key ) ?>" <?= selected( $this->selected, $optgrp_option_key, false ) ?>>
+                            
+                                <option value="<?= esc_attr( $optgrp_option_key ) ?>" <?= selected( $this->selected, $optgrp_option_key ) ?>>
                                 <?= esc_html( $optgrp_option_value ) ?>
                                 </option>
                         <?php endforeach; ?>
