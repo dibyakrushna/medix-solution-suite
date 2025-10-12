@@ -22,7 +22,7 @@ class DoctorRepository {
      * @author dibya <dibyakrishna@gmail.com>
      * @since 1.0.0
      * ** */
-    public function create_or_edit_doctor( WP_User $doctor, WP_Error $wp_error ): WP_Error|int {
+    public function create_or_edit_doctor( array $doctor, WP_Error $wp_error ): WP_Error|int {
 //        $user_name = $doctorRequestDto->get_username();
 //        $email = $doctorRequestDto->get_email();
 //        $id = $doctorRequestDto->get_id();
@@ -69,7 +69,6 @@ class DoctorRepository {
         }
         $data->ID = $id;
         $doctor->init( $data );
-        var_dump( $doctor->gender )  ;
         return  $doctor;
     }
 }

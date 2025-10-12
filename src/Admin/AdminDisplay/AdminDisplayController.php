@@ -77,6 +77,9 @@ class AdminDisplayController {
                 http_response_code( 500 );
                 $this->load_template_part( "admin-members-display-error-tmpl", [
                     "message" => $exc->getMessage(),
+                    "file" => $exc->getFile(),
+                    "line" => $exc->getLine(),
+                    "code" => $exc->getCode()
                 ] );
             }
         }

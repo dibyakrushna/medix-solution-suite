@@ -143,6 +143,25 @@ class DoctorRequestMapper {
     }
 
     /**
+     * Employment Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_hidden_input_info(): self {
+        $this->text_mapping = array_merge(
+                $this->text_mapping,
+                apply_filters(
+                        "mss_admin_doctor_hidden_input_info",
+                        [
+                            "mss_admin_doctor_id" => "set_id",
+                        ]
+                )
+        );
+
+        return $this;
+    }
+
+    /**
      * Permissions Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
@@ -221,6 +240,7 @@ class DoctorRequestMapper {
                         ->map_emergency_contact_info()
                         ->map_permissions_info()
                         ->map_additional_info()
+                        ->map_hidden_input_info()
                         ->mapp_with_text_field_sanitization()
                         ->mapp_with_email_field_sanitization()
                         ->mapp_with_file()

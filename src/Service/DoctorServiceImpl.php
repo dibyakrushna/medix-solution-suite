@@ -44,11 +44,11 @@ class DoctorServiceImpl implements DoctorServiceInterface {
     }
 
     public function save( DoctorRequestDTO $doctorRequestDto, WP_Error $wp_error ): WP_Error|DoctorResponseDTO {
-        $user_ob = $this->dto_to_db_mapper->map( $doctorRequestDto, $this->doctor_as_user );
+        $user_ob = $this->dto_to_db_mapper->map( $doctorRequestDto );
         $user = $this->doctor_repository->create_or_edit_doctor( $user_ob, $wp_error );
         if ( is_wp_error( $user ) ) {
             return $user;
         }
-        return $this->get_by_id( $user );
+        return $this->get_by_id( $user ); 
     }
 }

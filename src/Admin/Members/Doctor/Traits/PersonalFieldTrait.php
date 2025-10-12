@@ -192,7 +192,7 @@ trait PersonalFieldTrait {
         if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_email() ) ) ) {
             $result[ 'value' ] = $form_values->get_email();
         }
-
+        
         return $result;
     }
 

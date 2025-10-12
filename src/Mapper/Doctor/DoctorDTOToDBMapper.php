@@ -5,7 +5,6 @@ declare (strict_types=1);
 namespace MedixSolutionSuite\Mapper\Doctor;
 
 use MedixSolutionSuite\DTO\Doctor\DoctorRequestDTO;
-use WP_User;
 
 /**
  * Description of DoctorDTOToDBMapper
@@ -14,16 +13,16 @@ use WP_User;
  */
 class DoctorDTOToDBMapper {
 
-    private WP_User $doctor;
     private DoctorRequestDTO $dto;
+    private array $metadata = [] ;
+    private array $user_data = [];
 
-    public function map( DoctorRequestDTO $requestDTO, WP_User $doctor ): ?WP_User {
-        $this->doctor = $doctor;
+    public function map( DoctorRequestDTO $requestDTO ): ?array {
         $this->dto = $requestDTO;
         $this->map_personal_info()
                 ->map_permissions_info()
                 ->default();
-        return $this->doctor;
+        return $this->user_data;
     }
 
     /**
@@ -31,11 +30,11 @@ class DoctorDTOToDBMapper {
      * 
      * * */
     private function map_personal_info(): self {
-        $this->doctor->first_name = $this->dto->get_first_name();
-        $this->doctor->last_name = $this->dto->get_last_name();
-        $this->doctor->user_email = $this->dto->get_email();
-        $this->doctor->gender = $this->dto->get_gender();
-        $this->doctor->dob = $this->dto->get_dob();
+        $this->user_data["first_name"] = $this->dto->get_first_name();
+        $this->user_data["last_name"] = $this->dto->get_last_name();
+        $this->user_data["user_email"] = $this->dto->get_email();
+        $this->metadata["gender"] = $this->dto->get_gender();
+        $this->metadata["dob"] = mysql2date( "Y-m-d", $this->dto->get_dob() ) ;
         return $this;
     }
 
@@ -45,11 +44,10 @@ class DoctorDTOToDBMapper {
      * @since 1.0.0
      * * */
     private function map_permissions_info(): self {
-        $this->doctor->user_login = $this->dto->get_username();
-        $this->doctor->nickname = $this->dto->get_nickname();
-        $this->doctor->display_name = $this->dto->get_display_name();
-        $this->doctor->user_pass = $this->dto->get_password();
-
+        $this->user_data["user_login"]= $this->dto->get_username();
+        $this->user_data["nickname"] = $this->dto->get_nickname();
+        $this->user_data["display_name"] = $this->dto->get_display_name();
+        $this->user_data["user_pass"] = $this->dto->get_password();
         return $this;
     }
 
@@ -59,7 +57,10 @@ class DoctorDTOToDBMapper {
      * @since 1.0.0
      * * */
     private function default(): self {
-        $this->doctor->ID = $this->dto->get_id();
+      $this->user_data["ID"] = $this->dto->get_id();
+        $this->user_data["meta_input"] = $this->metadata;
+        $this->user_data["role"] = "mss_member_doctor";
         return $this;
     }
+    
 }

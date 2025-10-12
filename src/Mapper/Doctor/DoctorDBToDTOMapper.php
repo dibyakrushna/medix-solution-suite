@@ -34,6 +34,8 @@ class DoctorDBToDTOMapper {
         $this->doctor = $doctor;
         $this->map_personal_info()
                 ->map_professional_info()
+                ->map_permissions_info()
+                ->default()
                 ->set_dto();
         return $this->doctor_response_dto;
     }
@@ -43,14 +45,17 @@ class DoctorDBToDTOMapper {
      * 
      * * */
     private function map_personal_info(): self {
+        $user_data = $this->doctor->get_data_by( "id", $this->doctor->ID );
         $this->mapper = array_merge( $this->mapper,
-                [
+                apply_filters( "mss_admin_doctor_personal_info_db_to_dto", [
                     "set_first_name" => $this->doctor->user_firstname,
                     "set_last_name" => $this->doctor->last_name,
-                    "set_email" => $this->doctor->user_email
-                ]
+                    "set_email" => $user_data->user_email,
+                ])
         );
+       
         return $this;
+        
     }
 
     /**
@@ -65,6 +70,49 @@ class DoctorDBToDTOMapper {
 
         return $this;
     }
+    
+     /**
+     * Default
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function default(): self {
+        
+        $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_default_info_db_to_dto",
+                        [
+                            "set_id" => $this->doctor->ID,
+                           
+                        ]
+                )
+        );
+       
+        return $this;
+    }
+    
+     /**
+     * Permissions Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_permissions_info(): self {
+        $user_data = $this->doctor->get_data_by( "id", $this->doctor->ID );
+        
+        $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_peemission_info_db_to_dto",
+                        [
+                            "set_username" => $user_data->user_login,
+                            "set_nickname" => $this->doctor->nickname,
+                            "set_display_name" => $user_data->display_name,
+                        ]
+                )
+        );
+        return $this;
+    }
 
     /*
      * Set DTO 
@@ -76,5 +124,6 @@ class DoctorDBToDTOMapper {
                 call_user_func( [ $this->doctor_response_dto, $setter ], $set_value );
             }
         }
+       
     }
 }
