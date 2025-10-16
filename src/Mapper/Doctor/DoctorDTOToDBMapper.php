@@ -23,6 +23,7 @@ class DoctorDTOToDBMapper {
                 ->map_permissions_info()
                 ->map_professional_info()
                 ->map_educational_professional_qualification()
+                ->map_availability_scheduling_info()
                 ->default();
         return $this->user_data;
     }
@@ -75,6 +76,17 @@ class DoctorDTOToDBMapper {
         $this->metadata[ "year_of_grad" ] = $this->dto->get_year_of_graduation();
         $this->metadata[ "affiliations" ] = $this->dto->get_affiliations();
 
+        return $this;
+    }
+
+    /**
+     * Availability and Scheduling  
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_availability_scheduling_info(): self {
+       $this->metadata[ "working_days" ] = $this->dto->get_working_days();
+       $this->metadata[ "consulation_type" ] = $this->dto->get_consultation_type();
         return $this;
     }
 

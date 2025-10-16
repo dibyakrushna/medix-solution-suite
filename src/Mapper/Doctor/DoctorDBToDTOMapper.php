@@ -36,6 +36,7 @@ class DoctorDBToDTOMapper {
                 ->map_professional_info()
                 ->map_permissions_info()
                 ->map_educational_professional_qualification()
+                ->map_availability_scheduling_info()
                 ->default()
                 ->set_dto();
         return $this->doctor_response_dto;
@@ -132,14 +133,15 @@ class DoctorDBToDTOMapper {
 
         return $this;
     }
-/**
+
+    /**
      * Educational and professional 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_educational_professional_qualification(): self {
         $this->mapper = array_merge(
-               $this->mapper,
+                $this->mapper,
                 apply_filters(
                         "mss_admin_doctor_educational_professional_info_db_to_dto",
                         [
@@ -147,6 +149,26 @@ class DoctorDBToDTOMapper {
                             "set_college_university" => $this->doctor->college_university,
                             "set_year_of_graduation" => $this->doctor->year_of_grad,
                             "set_affiliations" => $this->doctor->affiliations,
+                        ]
+                )
+        );
+
+        return $this;
+    }
+
+    /**
+     * Availability and Scheduling  
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_availability_scheduling_info(): self {
+        $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_availability_schedule_info_db_to_dto",
+                        [
+                            "set_working_days" => $this->doctor->working_days,
+                            "set_consultation_type" => $this->doctor->consulation_type,
                         ]
                 )
         );
