@@ -37,6 +37,9 @@ class DoctorDBToDTOMapper {
                 ->map_permissions_info()
                 ->map_educational_professional_qualification()
                 ->map_availability_scheduling_info()
+                ->map_employment_info()
+                ->map_emergency_contact_info()
+                ->map_additional_info()
                 ->default()
                 ->set_dto();
         return $this->doctor_response_dto;
@@ -169,6 +172,71 @@ class DoctorDBToDTOMapper {
                         [
                             "set_working_days" => $this->doctor->working_days,
                             "set_consultation_type" => $this->doctor->consulation_type,
+                        ]
+                )
+        );
+
+        return $this;
+    }
+    
+     /**
+     * Employment Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_employment_info(): self {
+        $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_employment_info_db_to_dto",
+                        [
+                            "set_employment_type" => $this->doctor->employment_type,
+                            "set_department" => $this->doctor->department,
+                            "set_date_of_joining" => $this->doctor->date_of_joining,
+                            "set_designation" => $this->doctor->designation,
+                            "set_supervisor" => $this->doctor->supervisor
+                        ]
+                )
+        );
+
+        return $this;
+    }
+    /**
+     * Employment Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_emergency_contact_info(): self {
+       $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_emergency_contact_info_db_to_dto",
+                        [
+                            "set_emergency_contact_name" => $this->doctor->emergency_contact_name,
+                            "set_emergency_contact_relationship" => $this->doctor->emergency_relationship,
+                            "set_emergency_contact_phone" => $this->doctor->emergency_phone_number,
+                        ]
+                )
+        );
+        return $this;
+        
+    }
+    
+     /**
+     * Permissions Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_additional_info(): self {
+        $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_additional_info_db_to_dto",
+                        [
+                            "set_languages_spoken" => $this->doctor->languages_spoken,
+                            "set_short_biography" => $this->doctor->description,
+                            "set_social_media_profile" => $this->doctor->social_media_profile_link,
+                            "set_personal_statement" => $this->doctor->personal_statement
                         ]
                 )
         );

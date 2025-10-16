@@ -34,9 +34,9 @@ if ( !trait_exists( "EmergencyContactFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_emergency_contact_name() ) ) ) {
+                $result[ 'value' ] = $form_values->get_emergency_contact_name();
+            }
 
             return $result;
         }
@@ -64,9 +64,9 @@ if ( !trait_exists( "EmergencyContactFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_emergency_contact_relationship() ) ) ) {
+                $result[ 'value' ] = $form_values->get_emergency_contact_relationship();
+            }
 
             return $result;
         }
@@ -94,9 +94,9 @@ if ( !trait_exists( "EmergencyContactFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_emergency_contact_phone() ) ) ) {
+                $result[ 'value' ] = $form_values->get_emergency_contact_phone();
+            }
 
             return $result;
         }

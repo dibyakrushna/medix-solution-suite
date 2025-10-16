@@ -24,6 +24,9 @@ class DoctorDTOToDBMapper {
                 ->map_professional_info()
                 ->map_educational_professional_qualification()
                 ->map_availability_scheduling_info()
+                ->map_employment_info()
+                ->map_emergency_contact_info()
+                ->map_additional_info()
                 ->default();
         return $this->user_data;
     }
@@ -100,6 +103,49 @@ class DoctorDTOToDBMapper {
         $this->user_data[ "nickname" ] = $this->dto->get_nickname();
         $this->user_data[ "display_name" ] = $this->dto->get_display_name();
         $this->user_data[ "user_pass" ] = $this->dto->get_password();
+        return $this;
+    }
+    
+     /**
+     * Employment Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_employment_info(): self {
+        $this->metadata[ "employment_type"] = $this->dto->get_employment_type();
+        $this->metadata["department"] = $this->dto->get_department();
+        $this->metadata["date_of_joining"] = $this->dto->get_date_of_joining();
+        $this->metadata["designation"] = $this->dto->get_designation();
+        $this->metadata["supervisor"] = $this->dto->get_supervisor();
+
+        return $this;
+    }
+    
+     /**
+     * Employment Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_emergency_contact_info(): self {
+        $this->metadata["emergency_contact_name"] = $this->dto->get_emergency_contact_name();
+        $this->metadata["emergency_relationship"] = $this->dto->get_emergency_contact_relationship();
+        $this->metadata["emergency_phone_number"] = $this->dto->get_emergency_contact_phone();
+        return $this;
+        
+    }
+    
+    
+     /**
+     * Permissions Info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_additional_info(): self {
+        $this->metadata["languages_spoken"] = $this->dto->get_languages_spoken();
+        $this->user_data["description"] = $this->dto->get_short_biography();
+        $this->metadata["social_media_profile_link"] = $this->dto->get_social_media_profile();
+        $this->metadata["personal_statement"] = $this->dto->get_personal_statement();
+
         return $this;
     }
 

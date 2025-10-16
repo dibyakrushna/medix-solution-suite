@@ -34,9 +34,9 @@ if ( !trait_exists( "AdditionalInfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_languages_spoken() ) ) ) {
+                $result[ 'value' ] = $form_values->get_languages_spoken();
+            }
 
             return $result;
         }
@@ -62,9 +62,9 @@ if ( !trait_exists( "AdditionalInfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_short_biography() ) ) ) {
+                $result[ 'value' ] = $form_values->get_short_biography();
+            }
 
             return $result;
         }
@@ -90,10 +90,10 @@ if ( !trait_exists( "AdditionalInfoFieldTrait" ) ) {
 //                $result[ 'error' ] = true;
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
-//
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_social_media_profile() ) ) ) {
+                $result[ 'value' ] = $form_values->get_social_media_profile();
+            }
 
             return $result;
         }
@@ -120,9 +120,9 @@ if ( !trait_exists( "AdditionalInfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_personal_statement() ) ) ) {
+                $result[ 'value' ] = $form_values->get_personal_statement();
+            }
 
             return $result;
         }

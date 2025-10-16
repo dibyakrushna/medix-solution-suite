@@ -32,7 +32,7 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_full_time",
                         "name" => "mss_admin_doctor_employment_type",
                         "classes" => [ "regular-text", "full_time" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::FULLTIME->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::FULLTIME->value ? EmploymentTypeEnum::FULLTIME->value : "",
                     ],
                     [
                         "value" => esc_html( EmploymentTypeEnum::PARTTIME->value ),
@@ -40,7 +40,7 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_part_time",
                         "name" => "mss_admin_doctor_employment_type",
                         "classes" => [ "regular-text", "part_time" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::PARTTIME->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::PARTTIME->value ? EmploymentTypeEnum::PARTTIME->value : "",
                     ],
                     [
                         "value" => esc_html( EmploymentTypeEnum::CONTRACT->value ),
@@ -48,7 +48,7 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
                         "id" => "mss_admin_doctor_employment_type_contract",
                         "name" => "mss_admin_doctor_employment_type",
                         "classes" => [ "regular-text", "contract" ],
-                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::CONTRACT->value,
+                        "selected" => !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_employment_type() ) ) && $form_values->get_employment_type() === EmploymentTypeEnum::CONTRACT->value ? EmploymentTypeEnum::CONTRACT->value : "",
                     ]
                 ]
             ];
@@ -82,9 +82,9 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_department() ) ) ) {
+                $result[ 'value' ] = $form_values->get_department();
+            }
 
             return $result;
         }
@@ -111,9 +111,9 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_date_of_joining() ) ) ) {
+                $result[ 'value' ] = $form_values->get_date_of_joining();
+            }
 
             return $result;
         }
@@ -141,9 +141,9 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_designation() ) ) ) {
+                $result[ 'value' ] = $form_values->get_designation();
+            }
 
             return $result;
         }
@@ -171,9 +171,9 @@ if ( !trait_exists( "EmployementIfoFieldTrait" ) ) {
 //                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
 //            }
 //
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_supervisor() ) ) ) {
+                $result[ 'value' ] = $form_values->get_supervisor();
+            }
 
             return $result;
         }
