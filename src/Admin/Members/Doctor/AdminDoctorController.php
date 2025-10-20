@@ -22,8 +22,8 @@ use WP_Error;
  */
 class AdminDoctorController extends MembersController {
 
-    use BuildFormComponentTrait;
-    use DoctorRequestValidationTrait;
+    use BuildFormComponentTrait,
+        DoctorRequestValidationTrait;
 
     public function __construct(
             private AdminDoctorTable $admin_doctor_table,
@@ -31,16 +31,21 @@ class AdminDoctorController extends MembersController {
             private DoctorServiceImpl $doctor_service,
             private WP_Error $wp_error,
             private DoctorRequestMapper $doctor_request_mapper,
-    ) {}
+    ) {
+       
+
+    }
+   
     /**
      * List
      * @since 1.0.0
      * @author Dibya <dibyakrishna@gmail.com>
      * 
      * * */
-    public function list():? AdminDoctorTable {
+    public function list(): ?AdminDoctorTable {
         return $this->admin_doctor_table;
     }
+
     /**
      * Add
      * @since 1.0.0
@@ -49,7 +54,8 @@ class AdminDoctorController extends MembersController {
     public function add( WP_Error|DoctorDTO $value = null ): string {
         return $this->build_component( $value );
     }
-     /**
+
+    /**
      * Save
      * @since 1.0.0
      * @author Dibya <dibyakrishna@gmail.com>
@@ -70,8 +76,8 @@ class AdminDoctorController extends MembersController {
      * @author Dibya <dibyakrishna@gmail.com>
      * @param int $id Id of Doctor
      * * */
-    public function edit( int $id ):?string {
-        $response = $this->doctor_service->get_by_id( $id);
+    public function edit( int $id ): ?string {
+        $response = $this->doctor_service->get_by_id( $id );
         return $this->add( $response );
     }
 }

@@ -4,6 +4,8 @@ declare (strict_types=1);
 namespace MedixSolutionSuite\Admin\AdminDisplay;
 
 use MedixSolutionSuite\Admin\AdminDisplay\Helper\AdminMembersContext;
+use MedixSolutionSuite\Admin\AdminDisplay\Traits\AdminHooksManagerTrait;
+use MedixSolutionSuite\Admin\AdminDisplay\AdminDoctorAjaxController;
 use RuntimeException;
 use Throwable;
 
@@ -14,11 +16,17 @@ use Throwable;
  */
 class AdminDisplayController {
 
+    use AdminHooksManagerTrait;
+
     //put your code here
-    public function __construct( private AdminMembersContext $adminMembersContext ) {
-        add_action( "admin_enqueue_scripts", [ $this, "mss_display_admin_assets" ] );
+    public function __construct(
+            private AdminMembersContext $adminMembersContext
+            , private AdminDoctorAjaxController $admin_doctor_ajax
+    ) {
+        // add_action( "admin_enqueue_scripts", [ $this, "mss_display_admin_assets" ] );
         $this->register_mss_member_munu();
-        add_action( 'init', [ $this, 'create_mss_member_role' ] );
+        // add_action( 'init', [ $this, 'create_mss_member_role' ] );
+        $this->hooks( $this->admin_doctor_ajax );
     }
 
     public function create_mss_member_role() {
@@ -36,9 +44,12 @@ class AdminDisplayController {
     }
 
     public function mss_display_admin_assets() {
+        global $_wp_admin_css_colors;
         wp_register_style( 'custom_mss_admin_display_css', plugin_dir_url( __FILE__ ) . '/Assests/css/mss-admin-display-style.css', false, '1.0.0' );
         wp_enqueue_style( 'custom_mss_admin_display_css' );
-        global $_wp_admin_css_colors;
+
+        wp_register_script( "custom_mss_admin_display_script", plugin_dir_url( __FILE__ ) . '/Assests/js/mss.admin.display.script.js', [ "jquery" ] );
+        wp_enqueue_script( "custom_mss_admin_display_script" );
         $color = get_user_meta( get_current_user_id(), 'admin_color', true );
         $colors = $_wp_admin_css_colors[ $color ];
 
@@ -60,9 +71,9 @@ class AdminDisplayController {
         try {
             $display = $this->adminMembersContext->get_context();
             $template_view = sanitize_text_field( filter_input( INPUT_GET, "action" ) );
-            $parameters = filter_input( INPUT_GET, "parameter", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY ) ;
+            $parameters = filter_input( INPUT_GET, "parameter", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
             $parameters = $parameters ?? [];
-            
+
             if ( method_exists( $display, $template_view ) ) {
                 $view = call_user_func_array( [ $display, $template_view ], [ ...$parameters ] );
                 $this->load_template_part( "admin-members-display-tmpl", [ "display" => $view ] );
