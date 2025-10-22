@@ -7,7 +7,8 @@ namespace MedixSolutionSuite\Admin;
 use MedixSolutionSuite\Admin\AdminDisplay\AdminDisplayController;
 use MedixSolutionSuite\Admin\AdminDisplay\Helper\AdminMembersContext;
 use MedixSolutionSuite\Admin\AdminDisplay\Factories\MSSAdminMembersFactoriesImpl;
-use MedixSolutionSuite\Admin\AdminDisplay\AdminDoctorAjaxController;
+use MedixSolutionSuite\Admin\AdminDisplay\AdminAjaxController;
+use MedixSolutionSuite\Util\Request;
 
 /**
  * Description of Admin
@@ -50,7 +51,9 @@ class AdminMenu {
                     new AdminMembersContext(
                             new MSSAdminMembersFactoriesImpl
                     ),
-                    new AdminDoctorAjaxController
+                    new AdminAjaxController(
+                            new Request
+                    )
             );
             self::$instance = new self( $adminDipendecy );
         }

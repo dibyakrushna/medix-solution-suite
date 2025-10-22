@@ -68,6 +68,7 @@ class FormCompositComponent implements FormComponentInterface {
             <?php endforeach; ?>
             <?= get_submit_button( __( "Submit", MSS_TEXT_DOMAIN ) ) ?>
         </form>
+        
         <?php
         return ob_get_clean();
     }

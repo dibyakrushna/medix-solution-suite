@@ -5,7 +5,7 @@ namespace MedixSolutionSuite\Admin\AdminDisplay;
 
 use MedixSolutionSuite\Admin\AdminDisplay\Helper\AdminMembersContext;
 use MedixSolutionSuite\Admin\AdminDisplay\Traits\AdminHooksManagerTrait;
-use MedixSolutionSuite\Admin\AdminDisplay\AdminDoctorAjaxController;
+use MedixSolutionSuite\Admin\AdminDisplay\AdminAjaxController;
 use RuntimeException;
 use Throwable;
 
@@ -21,7 +21,7 @@ class AdminDisplayController {
     //put your code here
     public function __construct(
             private AdminMembersContext $adminMembersContext
-            , private AdminDoctorAjaxController $admin_doctor_ajax
+            , private AdminAjaxController $admin_doctor_ajax
     ) {
         // add_action( "admin_enqueue_scripts", [ $this, "mss_display_admin_assets" ] );
         $this->register_mss_member_munu();

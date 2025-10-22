@@ -122,7 +122,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
         ?>
         <?php if ( "radio" === $this->type || "checkbox" === $this->type ): ?>
             <?php foreach ( $this->options as $option_key => $option_value ) : ?>
-                
+
                 <input 
                     type="<?= esc_attr( $this->type ) ?>" 
                     name="<?= esc_attr( $option_value[ "name" ] ) ?>"
@@ -153,8 +153,18 @@ class InputField implements FormComponentInterface, LabelableInterface {
                 value="<?= esc_attr( $this->value ) ?>" 
                 />
                 <?php if ( !empty( trim( $this->description ) ) ) : ?>
-                <span class="description <?= $this->error ? 'error' : "" ?>"> <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?> </span>
+                <span class="description <?= $this->error ? 'error' : "" ?>">
+                    <?= esc_html__( $this->description, MSS_TEXT_DOMAIN ) ?>
+                </span>
             <?php endif; ?>
+            <?php if ( "file" === $this->type ): ?>
+                <p class="progress-wraper" style="display: none">
+                    <progress id="mss_upload_progress_<?= esc_attr( $this->id ) ?>" value="0" max="100"  class="<?= esc_attr( sanitize_html_class( $class_attr ) ) ?>">
+                    </progress>
+                    <span class=""></span>
+                </p>
+            <?php endif; ?>
+
         <?php endif; ?>
 
 
