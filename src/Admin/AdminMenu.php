@@ -9,6 +9,10 @@ use MedixSolutionSuite\Admin\AdminDisplay\Helper\AdminMembersContext;
 use MedixSolutionSuite\Admin\AdminDisplay\Factories\MSSAdminMembersFactoriesImpl;
 use MedixSolutionSuite\Admin\AdminDisplay\AdminAjaxController;
 use MedixSolutionSuite\Util\Request;
+use MedixSolutionSuite\Service\ImageServiceImpl;
+use WP_Error;
+use MedixSolutionSuite\Mapper\ImageServiceToDTOMapper;
+use MedixSolutionSuite\DTO\DoctorImageDTO;
 
 /**
  * Description of Admin
@@ -52,7 +56,13 @@ class AdminMenu {
                             new MSSAdminMembersFactoriesImpl
                     ),
                     new AdminAjaxController(
-                            new Request
+                            request: new Request,
+                            service: new ImageServiceImpl(
+                                    new WP_Error,
+                                    new ImageServiceToDTOMapper(
+                                            new DoctorImageDTO
+                                    )
+                            )
                     )
             );
             self::$instance = new self( $adminDipendecy );

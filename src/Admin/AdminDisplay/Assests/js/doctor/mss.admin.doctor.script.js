@@ -11,6 +11,7 @@ jQuery(document).ready(function ($) {
         const formData = new FormData();
         formData.append("action", "admin_doctor_profile_upload");
         formData.append("security", mss_admin_doc_script.wp_ajax_nonce);
+        formData.append("file_key", "doctor_profile_image");
         formData.append("doctor_profile_image", file);
 
         const progressBar = jQuery("#mss_upload_progress_mss_admin_doctor_profile_picture");
@@ -45,6 +46,9 @@ jQuery(document).ready(function ($) {
                 alert("Upload failed. Please try again.");
             }
         };
+        xhr.onerror = function(){
+            
+        }
 
         xhr.send(formData);
     });
