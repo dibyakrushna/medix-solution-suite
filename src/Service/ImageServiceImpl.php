@@ -6,7 +6,6 @@ namespace MedixSolutionSuite\Service;
 
 use MedixSolutionSuite\Service\ImageServiceInterface;
 use MedixSolutionSuite\Util\Request;
-use MedixSolutionSuite\DTO\DoctorImageDTO;
 use WP_Error;
 use MedixSolutionSuite\Mapper\ImageServiceToDTOMapper;
 
@@ -21,7 +20,7 @@ class ImageServiceImpl implements ImageServiceInterface {
         
     }
 
-    public function upload( array $files ): DoctorImageDTO|WP_Error {
+    public function upload( array $files ): array|WP_Error {
         $upload_overrides = array(
             'test_form' => false
         );
@@ -53,6 +52,6 @@ class ImageServiceImpl implements ImageServiceInterface {
         if( $this->error->has_errors()){
             return $this->error;
         }
-        return $this->mapper->upload($$movefiles);
+        return $this->mapper->upload($movefiles);
     }
 }

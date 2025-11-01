@@ -12,7 +12,7 @@ use MedixSolutionSuite\Util\Request;
 use MedixSolutionSuite\Service\ImageServiceImpl;
 use WP_Error;
 use MedixSolutionSuite\Mapper\ImageServiceToDTOMapper;
-use MedixSolutionSuite\DTO\DoctorImageDTO;
+use MedixSolutionSuite\DTO\ImageDTO;
 
 /**
  * Description of Admin
@@ -60,7 +60,7 @@ class AdminMenu {
                             service: new ImageServiceImpl(
                                     new WP_Error,
                                     new ImageServiceToDTOMapper(
-                                            new DoctorImageDTO
+                                            new ImageDTO
                                     )
                             )
                     )

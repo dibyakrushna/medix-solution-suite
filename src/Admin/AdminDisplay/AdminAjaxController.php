@@ -14,9 +14,10 @@ use MedixSolutionSuite\Service\ImageServiceImpl;
  * @author dibya
  */
 class AdminAjaxController {
+
     use AdminAjaxValidationTrait;
 
-    public function __construct( private Request $request, private ImageServiceImpl $service) {
+    public function __construct( private Request $request, private ImageServiceImpl $service ) {
         
     }
 
@@ -26,14 +27,24 @@ class AdminAjaxController {
      * @author dibya<dibyakrishna@gmail.com>
      * ** */
     public function upload_file() {
+        $files = $this->upload_file_validate( $this->request );
+        $response_files = $this->service->upload( $files );
 
-        
-       $files =  $this->upload_file_validate($this->request);
-       $this->service->upload( $files );
-       
-        
+        if ( is_wp_error( $response_files ) ) {
+            wp_send_json_error( [ "message" => __( $response_files->get_error_message(), MSS_TEXT_DOMAIN ) ] );
+        }
+        $for_json_as_array = [];
+        if ( is_array( $response_files ) && !empty( $response_files ) ) {
+            foreach ( $response_files as $key => $value ) {
+                $for_json_as_array[] = [
+                    "file_name" => $value->get_file_name(),
+                    "file_url" => $value->get_file_url(),
+                    "type" => $value->get_file_type()
+                ];
+            }
+        }
 
-        wp_send_json_error( [ "message" => __( "Something wrong", MSS_TEXT_DOMAIN ) ] );
+        wp_send_json_success( $for_json_as_array );
         die();
     }
 }
