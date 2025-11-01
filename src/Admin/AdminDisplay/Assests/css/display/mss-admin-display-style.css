@@ -97,3 +97,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     font-size: 10px;
     vertical-align: middle;
 }
+.mss-files-wraper .mss-files-item img{
+    width: 20%
+}

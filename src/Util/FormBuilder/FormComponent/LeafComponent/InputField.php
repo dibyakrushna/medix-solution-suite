@@ -164,10 +164,11 @@ class InputField implements FormComponentInterface, LabelableInterface {
                     <span class=""></span>
                 </p>
             <?php endif; ?>
-                <p>
-                    
+            <?php if ( "file" === $this->type ): ?>
+                <p class="mss-files-wraper" style="display: none">
+                    <span class="mss-files-item"></span>
                 </p>
-
+            <?php endif; ?>
         <?php endif; ?>
 
 

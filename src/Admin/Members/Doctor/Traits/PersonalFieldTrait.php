@@ -241,8 +241,11 @@ trait PersonalFieldTrait {
             "label" => esc_html( "Profile Picture", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_profile_picture",
             "name" => "mss_admin_doctor_profile_picture",
+            "extra_attr" => [
+                "data-action" => "admin_doctor_profile_upload",
+                "data-file_key" => "doctor_profile_image",
+            ]
         ];
-
         return $result;
     }
 
