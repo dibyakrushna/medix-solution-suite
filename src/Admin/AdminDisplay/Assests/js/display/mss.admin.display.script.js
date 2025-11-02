@@ -28,9 +28,15 @@ class XHRFileUploader {
         this.formData.append("action", action);
         this.formData.append("security", mss_admin_doc_script.wp_ajax_nonce);
         this.formData.append("file_key", fileKey);
-        for (let i = 0; i < this.files.length; i++) {
-            this.formData.append(fileKey, this.files[i]);
+        if (this.files.length > 1) {
+            for (let i = 0; i < this.files.length; i++) {
+                this.formData.append(fileKey + "[]", this.files[i]);
+            }
         }
+        if (this.files.length === 1) {
+            this.formData.append(fileKey, this.files[0]);
+        }
+
     }
     /**
      * xhr handler
@@ -61,16 +67,20 @@ class XHRFileUploader {
         }
     }
     #getProgressBar() {
-        const inputID = jQuery(this.fileEle).prop("id");
-        const progressBar = jQuery(`#mss_upload_progress_${inputID}`);
+        const progressBar = jQuery(`#mss_upload_progress_${this.#getEleID()}`);
         return progressBar;
+    }
+    #getEleID() {
+        const inputID = jQuery(this.fileEle).prop("id");
+        return inputID;
+
     }
     #handleCompleteRequest() {
         if (this.xhr.status === 200) {
             const response = JSON.parse(this.xhr?.responseText);
-            console.log(response)
             if (response?.success) {
                 this.#handletemplate(response?.data)
+                this.#handleAssignValue(response?.data)
 
             } else {
                 alert("Error: " + response?.data);
@@ -85,9 +95,7 @@ class XHRFileUploader {
             // Create HTML string of <img> tags
             const imagesHTML = files.map((val) => {
                 if (val?.type?.includes("image")) {
-                    return `
-                            <img alt="${val?.file_name}" src="${val?.file_url}" />
-                        `;
+                    return `<img alt="${val?.file_name}" src="${val?.file_url}" />`;
                 }
                 return "";
             }).join(""); // join array into single string
@@ -98,6 +106,18 @@ class XHRFileUploader {
             this.fileEle.value = "";
             this.#getProgressBar().parent().hide();
         }
+    }
+
+    /**
+     * Assiging value to holder
+     * @param {Array} data 
+     * **/
+    #handleAssignValue(data) {
+        if (Array.isArray(data)) {
+            const eleID = this.#getEleID();
+            jQuery(`${eleID}_holder`).val(JSON.stringify(data));
+        }
+
     }
 
 }

@@ -27,8 +27,7 @@ trait BuildFormComponentTrait {
         EducationalQualificationFieldTrait,
         AvailabilityFieldTrait,
         SystemAccessPermissionFieldTrait,
-            HiddenFieldTrait;
-        
+        HiddenFieldTrait;
 
     /**
      * Initial point to build the for 
@@ -53,13 +52,10 @@ trait BuildFormComponentTrait {
 
         $form_componet->add( $personal_table_component );
         //ID
-        $hidden_form_builder_component = $this->hidden_fild_component( $value ); 
-        $hidden_table_component = FormBuilder::get_form_component( "table", $this->build_table_hidden_attr());
-        
-        foreach ($hidden_form_builder_component as $hidden_component_val){
-            $hidden_table_component->add($hidden_component_val );
+        $hidden_form_builder_component = $this->hidden_fild_component( $value );
+        foreach ( $hidden_form_builder_component as $hidden_component_val ) {
+            $form_componet->add( $hidden_component_val );
         }
-        $form_componet->add($hidden_table_component);
         //Profetionl 
         $professinoal_form_builder_components = $this->professional_form_component( $value );
         $professional_table_component = FormBuilder::get_form_component( 'table', $this->build_professional_table_attr() );
@@ -263,7 +259,8 @@ trait BuildFormComponentTrait {
         ];
         return apply_filters( "mss_admin_doctor_emergency_conatct_form_componet", $componets, $form_values );
     }
-     /**
+
+    /**
      * 
      * @param type $attr
      * @return array|null
@@ -271,16 +268,20 @@ trait BuildFormComponentTrait {
     private function hidden_fild_component( WP_Error|DoctorDTO $form_values = null ): ?array {
 
         $componets = [
-            FormBuilder::get_form_component( 'input',$this->id_input_field( $form_values )),
+            FormBuilder::get_form_component( 'input', $this->id_input_field( $form_values ) ),
+            FormBuilder::get_form_component( 'input', $this->profile_image_input_field( $form_values ) ),
+            FormBuilder::get_form_component( 'input', $this->medical_licence_certificate_input_field( $form_values ) ),
+            FormBuilder::get_form_component( 'input', $this->educational_certificate_input_field( $form_values ) ),
         ];
         return apply_filters( "mss_admin_doctor_hidden_input_component", $componets, $form_values );
     }
 
-    /**r
+    /*     * r
      * 
      * @param type $attr
      * @return array|null
      */
+
     private function system_access_permission_form_component( WP_Error|DoctorDTO $form_values = null ): ?array {
 
         $componets = [
@@ -334,17 +335,7 @@ trait BuildFormComponentTrait {
         $attr = array_merge( $default_attr, $attr );
         return $attr;
     }
-    
-     private function build_table_hidden_attr( $attr = [] ): ?array {
-        $default_attr = [
-            "id" => "",
-            "extra_attr" => [ "role" => "presentation" ],
-            "classes" => [ "form-table" ],
-            
-        ];
-        $attr = array_merge( $default_attr, $attr );
-        return $attr;
-    }
+
     /**
      * Professional Table component
      * @author dibya <dibyakrishna@gmail.com>

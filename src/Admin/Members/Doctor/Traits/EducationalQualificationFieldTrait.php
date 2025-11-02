@@ -141,17 +141,13 @@ if ( !trait_exists( "EducationalQualificationFieldTrait" ) ) {
                 "header" => esc_html( "Certifications and Accreditation", MSS_TEXT_DOMAIN ),
                 "id" => "mss_admin_doctor_certifications_accreditations",
                 "name" => "mss_admin_doctor_certifications_accreditations",
-                "description" => esc_html( "e.g., FRCS, MRCP", MSS_TEXT_DOMAIN )
+                "description" => esc_html( "e.g., FRCS, MRCP", MSS_TEXT_DOMAIN ),
+                "extra_attr" => [
+                    "multiple" => true,
+                    "data-action" => "admin_doctor_profile_upload",
+                    "data-file_key" => "doctor_educational_certificate",
+                ]
             ];
-
-//            if ( !is_null( $form_values ) && is_wp_error( $form_values ) && !empty( trim( $form_values->get_error_message( "mss_admin_doctor_dob" ) ) ) ) {
-//                $result[ 'error' ] = true;
-//                $result[ 'description' ] = $form_values->get_error_message( "mss_admin_doctor_dob" );
-//            }
-//
-//            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( trim( $form_values->get_dob() ) ) ) {
-//                $result[ 'value' ] = $form_values->get_dob();
-//            }
 
             return $result;
         }

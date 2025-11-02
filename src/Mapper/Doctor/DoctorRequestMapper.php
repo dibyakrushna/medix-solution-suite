@@ -154,6 +154,9 @@ class DoctorRequestMapper {
                         "mss_admin_doctor_hidden_input_info",
                         [
                             "mss_admin_doctor_id" => "set_id",
+                            "mss_admin_doctor_profile_picture_holder" => "set_profile_image",
+                            "mss_admin_doctor_certificate_holder" => "set_medical_license_certificate",
+                            "mss_admin_doctor_certifications_accreditations_holder" => "set_educational_certificate"
                         ]
                 )
         );

@@ -4,6 +4,9 @@ declare (strict_types=1);
 namespace MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent;
 
 use MedixSolutionSuite\Util\FormBuilder\FormComponent\FormComponentInterface;
+use MedixSolutionSuite\Util\FormBuilder\FormComponent\LabelableInterface;
+use MedixSolutionSuite\Util\FormBuilder\FormComponent\LeafComponent\InputField;
+use MedixSolutionSuite\Util\FormBuilder\FormComponent\CompositComponent\TableComposite;
 
 /**
  * @package CompositComponent
@@ -61,14 +64,18 @@ class FormCompositComponent implements FormComponentInterface {
             <?= esc_attr( $extra_attr_str ) ?>>
                 <?php wp_nonce_field(); ?>
                 <?php foreach ( $this->fields as $key => $field ) : ?>
-                <h1 class="wp-heading-inline">
-                    <?php esc_html_e( $field->header, MSS_TEXT_DOMAIN ) ?>			
-                </h1>
+                    <?php if ( $field instanceof TableComposite ) : ?>
+                    <h1 class="wp-heading-inline">
+                        <?php if ( $field instanceof LabelableInterface ) : ?>
+                            <?php esc_html_e( $field->getHeader(), MSS_TEXT_DOMAIN ) ?>	
+                        <?php endif; ?>
+                    </h1>
+                <?php endif; ?>
                 <?= $field->render() ?>
             <?php endforeach; ?>
             <?= get_submit_button( __( "Submit", MSS_TEXT_DOMAIN ) ) ?>
         </form>
-        
+
         <?php
         return ob_get_clean();
     }

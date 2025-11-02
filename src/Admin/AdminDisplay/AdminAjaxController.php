@@ -27,11 +27,14 @@ class AdminAjaxController {
      * @author dibya<dibyakrishna@gmail.com>
      * ** */
     public function upload_file() {
+        
         $files = $this->upload_file_validate( $this->request );
+       
         $response_files = $this->service->upload( $files );
 
         if ( is_wp_error( $response_files ) ) {
             wp_send_json_error( [ "message" => __( $response_files->get_error_message(), MSS_TEXT_DOMAIN ) ] );
+            die();
         }
         $for_json_as_array = [];
         if ( is_array( $response_files ) && !empty( $response_files ) ) {

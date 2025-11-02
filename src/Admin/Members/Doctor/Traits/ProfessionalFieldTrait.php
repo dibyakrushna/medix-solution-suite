@@ -194,6 +194,11 @@ trait ProfessionalFieldTrait {
             "header" => esc_html( "Medical License/Certificate", MSS_TEXT_DOMAIN ),
             "id" => "mss_admin_doctor_certificate",
             "name" => "mss_admin_doctor_certificate",
+             "extra_attr" => [
+                 "multiple" => true,
+                 "data-action" => "admin_doctor_profile_upload",
+                "data-file_key" => "doctor_medical_licence_certificate",
+             ]
         ];
         return $result;
         

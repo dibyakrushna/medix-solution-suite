@@ -11,7 +11,7 @@ use MedixSolutionSuite\Util\FormBuilder\FormComponent\LabelableInterface;
  * @since 1.0.0
  * @author dibya
  */
-class TableComposite implements FormComponentInterface {
+class TableComposite implements FormComponentInterface, LabelableInterface {
 
     private $fields = [];
     public $header = null;
@@ -29,7 +29,7 @@ class TableComposite implements FormComponentInterface {
 
         $attrs = array_merge( $default_attr, $attrs );
 
-        //$this->id = $attrs['id'];
+        $this->id = $attrs['id'];
         $this->header = $attrs[ 'header' ];
         $this->classes = $attrs[ "classes" ];
         $this->extra_attr = $attrs[ 'extra_attr' ];
@@ -69,5 +69,13 @@ class TableComposite implements FormComponentInterface {
         </table>
         <?php
         return ob_get_clean();
+    }
+
+    public function getHeader(): string {
+        return $this->header;
+    }
+
+    public function getId(): string {
+        return $this->id;
     }
 }

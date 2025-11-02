@@ -56,7 +56,6 @@ abstract class DoctorDTO {
     private string $short_biography = '';
     private string $social_media_profile = '';
     private string $personal_statement = '';
-    
 
     /**
      * @var int ID
@@ -64,6 +63,27 @@ abstract class DoctorDTO {
      * @author dibya<dibyakrishna@gmail.com>
      * * */
     private int $ID = 0;
+
+    /**
+     * @var string $profile_image
+     * @since 1.0.0
+     * @author dibya<dibyakrishna@gmail.com>
+     * * */
+    private string $profile_image;
+
+    /**
+     * @var array $medical_license_certificate
+     * @since 1.0.0
+     * @author dibya<dibyakrishna@gmail.com>
+     * * */
+    private string $medical_license_certificate;
+
+    /**
+     * @var array $educational_certificate
+     * @since 1.0.0
+     * @author dibya<dibyakrishna@gmail.com>
+     * * */
+    private string $educational_certificate;
 
     public function get_first_name(): string {
         return $this->first_name;
@@ -400,16 +420,72 @@ abstract class DoctorDTO {
      * @author dibya <dibyakrishna@gmail.com>
      * * */
     public function get_id(): ?int {
-        return $this->ID ;
+        return $this->ID;
     }
 
     /**
      * Setter for ID
-     * @return int $ID
      * @since 1.0.0
      * @author dibya <dibyakrishna@gmail.com>
      * * */
     public function set_id( int $id = 0 ) {
         $this->ID = $id;
+    }
+
+    /**
+     * Getter for profile_image
+     * @return string $profile_image
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function get_profile_image(): ?string {
+        return $this->profile_image;
+    }
+
+    /**
+     * Setter for ID
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function set_profile_image( string $profile_image ) {
+        $this->profile_image = $profile_image;
+    }
+
+    /**
+     * Getter for medical_license_certificate
+     * @return string $medical_license_certificate
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function get_medical_license_certificate(): ?string {
+        return $this->medical_license_certificate;
+    }
+
+    /**
+     * Setter for ID
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function set_medical_license_certificate( string $medical_license_certificate ) {
+        $this->medical_license_certificate = $medical_license_certificate;
+    }
+
+    /**
+     * Getter for educational_certificate
+     * @return string $educational_certificate
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function get_educational_certificate(): ?string {
+        return $this->educational_certificate;
+    }
+
+    /**
+     * Setter for $educational_certificate
+     * @since 1.0.0
+     * @author dibya <dibyakrishna@gmail.com>
+     * * */
+    public function set_educational_certificate( string $educational_certificate ) {
+        $this->educational_certificate = $educational_certificate;
     }
 }

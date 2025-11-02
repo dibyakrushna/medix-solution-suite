@@ -27,6 +27,7 @@ class DoctorDTOToDBMapper {
                 ->map_employment_info()
                 ->map_emergency_contact_info()
                 ->map_additional_info()
+                ->map_hidden_input_info()
                 ->default();
         return $this->user_data;
     }
@@ -88,8 +89,8 @@ class DoctorDTOToDBMapper {
      * @since 1.0.0
      * * */
     private function map_availability_scheduling_info(): self {
-       $this->metadata[ "working_days" ] = $this->dto->get_working_days();
-       $this->metadata[ "consulation_type" ] = $this->dto->get_consultation_type();
+        $this->metadata[ "working_days" ] = $this->dto->get_working_days();
+        $this->metadata[ "consulation_type" ] = $this->dto->get_consultation_type();
         return $this;
     }
 
@@ -105,47 +106,57 @@ class DoctorDTOToDBMapper {
         $this->user_data[ "user_pass" ] = $this->dto->get_password();
         return $this;
     }
-    
-     /**
+
+    /**
      * Employment Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_employment_info(): self {
-        $this->metadata[ "employment_type"] = $this->dto->get_employment_type();
-        $this->metadata["department"] = $this->dto->get_department();
-        $this->metadata["date_of_joining"] = $this->dto->get_date_of_joining();
-        $this->metadata["designation"] = $this->dto->get_designation();
-        $this->metadata["supervisor"] = $this->dto->get_supervisor();
+        $this->metadata[ "employment_type" ] = $this->dto->get_employment_type();
+        $this->metadata[ "department" ] = $this->dto->get_department();
+        $this->metadata[ "date_of_joining" ] = $this->dto->get_date_of_joining();
+        $this->metadata[ "designation" ] = $this->dto->get_designation();
+        $this->metadata[ "supervisor" ] = $this->dto->get_supervisor();
 
         return $this;
     }
-    
-     /**
+
+    /**
      * Employment Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_emergency_contact_info(): self {
-        $this->metadata["emergency_contact_name"] = $this->dto->get_emergency_contact_name();
-        $this->metadata["emergency_relationship"] = $this->dto->get_emergency_contact_relationship();
-        $this->metadata["emergency_phone_number"] = $this->dto->get_emergency_contact_phone();
+        $this->metadata[ "emergency_contact_name" ] = $this->dto->get_emergency_contact_name();
+        $this->metadata[ "emergency_relationship" ] = $this->dto->get_emergency_contact_relationship();
+        $this->metadata[ "emergency_phone_number" ] = $this->dto->get_emergency_contact_phone();
         return $this;
-        
     }
-    
-    
-     /**
+
+    /**
      * Permissions Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_additional_info(): self {
-        $this->metadata["languages_spoken"] = $this->dto->get_languages_spoken();
-        $this->user_data["description"] = $this->dto->get_short_biography();
-        $this->metadata["social_media_profile_link"] = $this->dto->get_social_media_profile();
-        $this->metadata["personal_statement"] = $this->dto->get_personal_statement();
+        $this->metadata[ "languages_spoken" ] = $this->dto->get_languages_spoken();
+        $this->user_data[ "description" ] = $this->dto->get_short_biography();
+        $this->metadata[ "social_media_profile_link" ] = $this->dto->get_social_media_profile();
+        $this->metadata[ "personal_statement" ] = $this->dto->get_personal_statement();
 
+        return $this;
+    }
+
+    /**
+     * Map hidden input info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_hidden_input_info(): self {
+        $this->metadata[ "profile_image" ] = $this->dto->get_profile_image();
+        $this->user_data[ "medical_licence_certificates" ] = $this->dto->get_medical_license_certificate() ?? [];
+        $this->metadata[ "educational_certificates" ] = $this->dto->get_educational_certificate() ?? [];
         return $this;
     }
 

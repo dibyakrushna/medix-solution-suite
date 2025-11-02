@@ -40,6 +40,7 @@ class DoctorDBToDTOMapper {
                 ->map_employment_info()
                 ->map_emergency_contact_info()
                 ->map_additional_info()
+                ->map_hidden_input_info()
                 ->default()
                 ->set_dto();
         return $this->doctor_response_dto;
@@ -178,8 +179,8 @@ class DoctorDBToDTOMapper {
 
         return $this;
     }
-    
-     /**
+
+    /**
      * Employment Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
@@ -201,13 +202,14 @@ class DoctorDBToDTOMapper {
 
         return $this;
     }
+
     /**
      * Employment Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
      * * */
     private function map_emergency_contact_info(): self {
-       $this->mapper = array_merge(
+        $this->mapper = array_merge(
                 $this->mapper,
                 apply_filters(
                         "mss_admin_doctor_emergency_contact_info_db_to_dto",
@@ -219,10 +221,9 @@ class DoctorDBToDTOMapper {
                 )
         );
         return $this;
-        
     }
-    
-     /**
+
+    /**
      * Permissions Info 
      * @author  dibya<dibyakrishna@gmail.com>
      * @since 1.0.0
@@ -241,6 +242,26 @@ class DoctorDBToDTOMapper {
                 )
         );
 
+        return $this;
+    }
+
+    /**
+     * Map hidden input info 
+     * @author  dibya<dibyakrishna@gmail.com>
+     * @since 1.0.0
+     * * */
+    private function map_hidden_input_info(): self {
+        $this->mapper = array_merge(
+                $this->mapper,
+                apply_filters(
+                        "mss_admin_doctor_hiden_input_info_db_to_dto",
+                        [
+                            "set_profile_image" => $this->doctor->profile_image,
+                            "set_medical_license_certificate" => $this->doctor->medical_licence_certificates,
+                            "set_educational_certificate" => $this->doctor->educational_certificates,
+                        ]
+                )
+        );
         return $this;
     }
 
