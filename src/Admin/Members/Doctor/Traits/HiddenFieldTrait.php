@@ -49,8 +49,8 @@ if ( !trait_exists( "HiddenFieldTrait" ) ) {
                 "type" => "hidden"
             ];
 
-            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_id() ) ) {
-                $result[ 'value' ] = json_encode( $form_values->get_profile_image() );
+            if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_profile_image() ) ) {
+                $result[ 'value' ] = esc_html( $form_values->get_profile_image() );
             }
             return $result;
         }
@@ -73,7 +73,7 @@ if ( !trait_exists( "HiddenFieldTrait" ) ) {
 
             if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_medical_license_certificate() ) ) {
                 $licence = $form_values->get_medical_license_certificate();
-                $result[ 'value' ] = json_encode( $licence );
+                $result[ 'value' ] = esc_html( $licence );
             }
             return $result;
         }
@@ -96,7 +96,7 @@ if ( !trait_exists( "HiddenFieldTrait" ) ) {
 
             if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_educational_certificate() ) ) {
                 $educational_certificate = $form_values->get_educational_certificate();
-                $result[ 'value' ] = json_encode( $educational_certificate ); 
+                $result[ 'value' ] = esc_html( $educational_certificate );
             }
             return $result;
         }

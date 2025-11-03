@@ -115,7 +115,7 @@ class XHRFileUploader {
     #handleAssignValue(data) {
         if (Array.isArray(data)) {
             const eleID = this.#getEleID();
-            jQuery(`${eleID}_holder`).val(JSON.stringify(data));
+            jQuery(`#${eleID.trim()}_holder`).val(JSON.stringify(data));
         }
 
     }
