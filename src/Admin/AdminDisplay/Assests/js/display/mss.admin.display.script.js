@@ -95,6 +95,7 @@ class XHRFileUploader {
             // Create HTML string of <img> tags
             const imagesHTML = files.map((val) => {
                 if (val?.type?.includes("image")) {
+                    console.log(val?.file_url);
                     return `<img alt="${val?.file_name}" src="${val?.file_url}" />`;
                 }
                 return "";
@@ -115,7 +116,9 @@ class XHRFileUploader {
     #handleAssignValue(data) {
         if (Array.isArray(data)) {
             const eleID = this.#getEleID();
-            jQuery(`#${eleID.trim()}_holder`).val(JSON.stringify(data));
+            const stringyFiData = JSON.stringify(data)
+            console.log(JSON.parse(stringyFiData));
+            jQuery(`#${eleID.trim()}_holder`).val(stringyFiData);
         }
 
     }

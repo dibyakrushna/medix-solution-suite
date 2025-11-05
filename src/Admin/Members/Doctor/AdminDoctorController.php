@@ -51,14 +51,6 @@ class AdminDoctorController extends MembersController {
      * @author Dibya <dibyakrishna@gmail.com>
      * * */
     public function add( WP_Error|DoctorDTO $value = null ): string {
-        echo $profile_image = $_POST[ "mss_admin_doctor_profile_picture_holder" ];
-        if ( !is_null( $profile_image ) ) {
-            $profile_image = stripcslashes( $profile_image );
-            echo "<pre>";
-            print_r( json_decode( $profile_image ) );
-            echo "</pre>";
-        }
-
         return $this->build_component( $value );
     }
 

@@ -29,7 +29,8 @@ class AdminAjaxController {
     public function upload_file() {
         
         $files = $this->upload_file_validate( $this->request );
-       
+        $files = $this->get_uplaod_file();
+            
         $response_files = $this->service->upload( $files );
 
         if ( is_wp_error( $response_files ) ) {
@@ -38,7 +39,7 @@ class AdminAjaxController {
         }
         $for_json_as_array = [];
         if ( is_array( $response_files ) && !empty( $response_files ) ) {
-            foreach ( $response_files as $key => $value ) {
+            foreach ( $response_files as  $value ) {
                 $for_json_as_array[] = [
                     "file_name" => $value->get_file_name(),
                     "file_url" => $value->get_file_url(),

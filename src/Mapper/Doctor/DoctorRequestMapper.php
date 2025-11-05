@@ -148,8 +148,8 @@ class DoctorRequestMapper {
      * @since 1.0.0
      * * */
     private function map_hidden_input_info(): self {
-        $this->text_mapping = array_merge(
-                $this->text_mapping,
+       $this->text_mapping = array_merge(
+               $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_hidden_input_info",
                         [
@@ -290,8 +290,8 @@ class DoctorRequestMapper {
      * * */
     private function mapp_with_file(): self {
         foreach ( $this->file_mapping as $field => $setter ) {
-            $value = $this->request->file( $field );
-            if ( $value !== null && is_array( $value ) ) {
+            $value = $this->request->input( $field );
+            if ( $value !== null && !is_array( $value ) ) {
                 call_user_func( [ $this->doctor_request_dto, $setter ], $value );
             }
         }

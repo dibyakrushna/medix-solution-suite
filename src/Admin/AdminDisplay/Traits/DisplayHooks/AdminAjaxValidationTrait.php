@@ -30,7 +30,7 @@ if ( !trait_exists( "AdminAjaxValidationTrait" ) ) {
 
             $this->upload_file_key_check();
             $this->upload_file_check_file();
-
+            
             return $this->get_uplaod_file();
         }
 
@@ -56,7 +56,8 @@ if ( !trait_exists( "AdminAjaxValidationTrait" ) ) {
 
         private function get_uplaod_file(): array {
             $key = $this->request->post( "file_key" );
-            return $this->request->file( $key );
+           
+            return $this->request->file( sanitize_text_field( $key ) );
         }
 
         /**

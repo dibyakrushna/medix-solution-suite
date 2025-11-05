@@ -49,9 +49,10 @@ class ImageServiceImpl implements ImageServiceInterface {
                 }
             }
         }
-        if( $this->error->has_errors()){
+        if ( $this->error->has_errors() ) {
             return $this->error;
         }
-        return $this->mapper->upload($movefiles);
+         
+        return $this->mapper->upload( $movefiles );
     }
 }
