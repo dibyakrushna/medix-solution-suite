@@ -51,6 +51,7 @@ class AdminDoctorController extends MembersController {
      * @author Dibya <dibyakrishna@gmail.com>
      * * */
     public function add( WP_Error|DoctorDTO $value = null ): string {
+        
         return $this->build_component( $value );
     }
 

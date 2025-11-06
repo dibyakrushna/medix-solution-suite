@@ -200,6 +200,10 @@ trait ProfessionalFieldTrait {
                 "data-file_key" => "doctor_medical_licence_certificate",
              ]
         ];
+         if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_medical_license_certificate() ) ) {
+                $licence = $form_values->get_medical_license_certificate();
+                $result[ 'files_url' ] = $licence ;
+            }
         return $result;
         
     }

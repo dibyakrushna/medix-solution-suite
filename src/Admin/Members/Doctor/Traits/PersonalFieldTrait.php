@@ -246,6 +246,9 @@ trait PersonalFieldTrait {
                 "data-file_key" => "doctor_profile_image",
             ]
         ];
+        if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_profile_image() ) ) {
+            $result[ 'files_url' ] = $form_values->get_profile_image();
+        }
         return $result;
     }
 

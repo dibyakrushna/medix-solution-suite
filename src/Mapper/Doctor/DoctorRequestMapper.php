@@ -148,8 +148,8 @@ class DoctorRequestMapper {
      * @since 1.0.0
      * * */
     private function map_hidden_input_info(): self {
-       $this->text_mapping = array_merge(
-               $this->text_mapping,
+        $this->text_mapping = array_merge(
+                $this->text_mapping,
                 apply_filters(
                         "mss_admin_doctor_hidden_input_info",
                         [

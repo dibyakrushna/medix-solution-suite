@@ -257,7 +257,7 @@ class DoctorDBToDTOMapper {
                         "mss_admin_doctor_hiden_input_info_db_to_dto",
                         [
                             "set_profile_image" => is_array( $this->doctor->profile_image ) ? json_encode( $this->doctor->profile_image ) : "",
-                            "set_medical_license_certificate" => is_array( $this->doctor->medical_licence_certificates ) ? json_encode( $this->doctor->medical_licence_certificate ) : "",
+                            "set_medical_license_certificate" => is_array( $this->doctor->medical_licence_certificates ) ? json_encode( $this->doctor->medical_licence_certificates ) : "",
                             "set_educational_certificate" => is_array($this->doctor->educational_certificates) ? json_encode( $this->doctor->educational_certificates ) : "",
                         ]
                 )

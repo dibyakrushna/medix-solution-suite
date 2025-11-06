@@ -79,6 +79,12 @@ class InputField implements FormComponentInterface, LabelableInterface {
      * * */
     private bool $error = false;
 
+    /**
+     * @var string 
+     * @since 1.0.0
+     * * */
+    public string $files_url;
+
     public function __construct( array $attr ) {
         $default_attr = [
             "type" => "text",
@@ -92,6 +98,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
             "error" => false,
             "description" => "",
             "value" => "",
+            "files_url" => ""
         ];
 
         $attr = array_merge( $default_attr, $attr );
@@ -107,6 +114,7 @@ class InputField implements FormComponentInterface, LabelableInterface {
         $this->error = $attr[ "error" ];
         $this->description = $attr[ 'description' ];
         $this->value = $attr[ "value" ];
+        $this->files_url = $attr[ "files_url" ];
     }
 
     public function render(): string {
@@ -165,9 +173,26 @@ class InputField implements FormComponentInterface, LabelableInterface {
                 </p>
             <?php endif; ?>
             <?php if ( "file" === $this->type ): ?>
-                <p class="mss-files-wraper" style="display: none">
-                    <span class="mss-files-item"></span>
-                </p>
+                <?php if ( !empty( $this->files_url ) ): ?>
+                    <?php
+                    $file_data = json_decode( stripslashes( $this->files_url ) );
+                    ?>
+                    <?php if ( $file_data && is_array( $file_data ) && !empty( $file_data ) ): ?>
+                        <p class="mss-files-wraper" >
+                            <span class="mss-files-item">
+                                <?php foreach ( $file_data as $data ) : ?>
+                                    <?php if ( str_contains( $data?->type, 'image' ) ) : ?>
+                                        <img src="<?= esc_url_raw( $data?->file_url ) ?>" alt="<?= esc_attr__( $data?->file_name ) ?>"/> 
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </span>
+                        </p>
+                    <?php endif; ?>
+                <?php else : ?>
+                    <p class="mss-files-wraper" style="display: none">
+                        <span class="mss-files-item"></span>
+                    </p>
+                <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
 

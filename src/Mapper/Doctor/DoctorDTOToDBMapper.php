@@ -154,9 +154,10 @@ class DoctorDTOToDBMapper {
      * @since 1.0.0
      * * */
     private function map_hidden_input_info(): self {
-        $this->metadata[ "profile_image" ] = $this->convert_stringify_to_array( $this->dto->get_profile_image(), "profile_image" );
-        $this->user_data[ "medical_licence_certificates" ] = $this->convert_stringify_to_array( $this->dto->get_medical_license_certificate(), "medical_certificate" );
-        $this->metadata[ "educational_certificates" ] = $this->convert_stringify_to_array( $this->dto->get_educational_certificate(), "educational_certificate" );
+        
+        $this->metadata[ "profile_image" ] = $this->convert_stringify_to_array( $this->dto->get_profile_image());
+        $this->metadata[ "medical_licence_certificates" ] = $this->convert_stringify_to_array( $this->dto->get_medical_license_certificate());
+        $this->metadata[ "educational_certificates" ] = $this->convert_stringify_to_array( $this->dto->get_educational_certificate() );
         return $this;
     }
 
@@ -167,32 +168,17 @@ class DoctorDTOToDBMapper {
      * @since 1.0.0
      * @return array JSON decoded data
      * * */
-    private function convert_stringify_to_array( string $input_value, string $indentifier ): array {
+    private function convert_stringify_to_array( string $input_value ): array {
         if ( is_null( $input_value ) || empty( trim( $input_value ) ) ) {
             return [];
         }
 
+        $stripped = stripslashes( $input_value );
+        $decoded = json_decode( $stripped, true );
 
-
-        //       $decoded = json_decode( $input_value, true );
-//        if ( json_last_error() === JSON_ERROR_NONE ) {
-//            return $decoded;
-//        }
-       // $stripped = stripslashes( $input_value );
-        // $decoded = json_decode( $stripped, true );
-//
-//        if ( json_last_error() === JSON_ERROR_NONE ) {
-//            return $decoded;
-//        }
-        echo $indentifier;
-        echo $input_value;
-        $json = '[{"file_name":"visual-selection-35.png","file_url":"https://dibya.ct.ws/wordpress/wp-content/uploads/2025/11/visual-selection-31.png","type":"image/png"}]';
-        $decoded = json_decode( $input_value, TRUE );
-        echo "<pre>";
-        echo json_last_error();
-        var_dump( $json === $input_value , $input_value, $json);
-        print_r(  $decoded  );
-        echo "</pre>";
+        if ( json_last_error() === JSON_ERROR_NONE ) {
+            return $decoded;
+        }
         return [];
     }
 

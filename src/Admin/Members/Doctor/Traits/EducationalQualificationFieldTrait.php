@@ -148,7 +148,10 @@ if ( !trait_exists( "EducationalQualificationFieldTrait" ) ) {
                     "data-file_key" => "doctor_educational_certificate",
                 ]
             ];
-
+             if ( !is_null( $form_values ) && $form_values instanceof DoctorDTO && !empty( $form_values->get_educational_certificate() ) ) {
+                $educational_certificate = $form_values->get_educational_certificate();
+                $result[ 'files_url' ] =  $educational_certificate ;
+            }
             return $result;
         }
     }

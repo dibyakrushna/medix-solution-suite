@@ -61,7 +61,7 @@ class Request {
      * @return mixed
      */
     public function post( string $key, mixed $default = null ): mixed {
-        return filter_input( INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS ) ?? $default;
+        return filter_input( INPUT_POST, $key) ?? $default;
     }
 
     /**
